@@ -354,6 +354,11 @@ def run_question(question: str, *, run_id: Optional[str] = None, options: Option
                 try:
                     comps = _build_components(active_cfg)
                     active_cfg = comps["config"]
+                    if getattr(comps["source"], "name", "") == "zetaris":
+                        for lvl, msg in active_cfg.zetaris_notes():
+                            trace.note(lvl, msg)
+                            if lvl == "WARNING":
+                                warnings.append(msg)
                     ctx = RunContext(config=active_cfg, run_id=run_id, source=comps["source"],
                                      provider=comps["provider"], engine=comps["engine"],
                                      trace=trace, deadline=deadline)

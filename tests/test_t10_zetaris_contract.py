@@ -95,7 +95,7 @@ def make_server():
 
 
 def _source(srv):
-    return ZetarisSource(base_url=srv.url, api_key=KEY, tables=TABLES, timeout_s=5)
+    return ZetarisSource(base_url=srv.url, api_key=KEY, tables=TABLES, timeout_s=5, org_id="1")
 
 
 def _find_sql(obj):
@@ -266,7 +266,7 @@ def test_connection_refused_is_unavailable():
     s.bind(("127.0.0.1", 0))
     port = s.getsockname()[1]
     s.close()
-    src = ZetarisSource(base_url=f"http://127.0.0.1:{port}", api_key=KEY, tables=TABLES, timeout_s=2)
+    src = ZetarisSource(base_url=f"http://127.0.0.1:{port}", api_key=KEY, tables=TABLES, timeout_s=2, org_id="1")
     with pytest.raises(SourceUnavailable):
         src.query(SPEC)
 

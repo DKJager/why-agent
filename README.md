@@ -103,15 +103,15 @@ Set `SAMPLE_MODE=false` and provide credentials. `.env.example` lists every vari
 | Variable | Meaning |
 |---|---|
 | `SAMPLE_MODE` | `true` (default in `.env.example` and Docker) runs on cached CSV data; `false` enables live mode |
-| `ZETARIS_REST_URL` | Zetaris direct REST API base, ending in `/api/v1.0`. `ZETARIS_BASE_URL` is accepted as an alias, but note that Zetaris's own scripts use that name for the web UI origin, so prefer `ZETARIS_REST_URL`. Required in live mode |
-| `ZETARIS_ORG_ID` | Sent as `X-Org-ID`. Default `1` |
+| `ZETARIS_REST_URL` | Zetaris direct REST API base, ending in `/api/v1.0`. `ZETARIS_BASE_URL` is accepted only as a legacy alias: it logs a warning, and it must also end in `/api/v1.0` or the run stops with a configuration error (Zetaris's own scripts use that name for the web UI origin). Required in live mode |
+| `ZETARIS_ORG_ID` | Numeric organisation ID (Zetaris: Management > Organisation), sent as `X-Org-ID`. Required in live mode; there is no default, so a missing value stops the run with a configuration error |
 | `ZETARIS_API_KEY` | Zetaris Bearer key. Required in live mode |
 | `ZETARIS_TABLE_ORDERS`, `ZETARIS_TABLE_TICKETS`, `ZETARIS_TABLE_SHIPMENTS` | Table names for the three sources |
 | `METERLESS_BASE_URL` (alias `MODEL_BASE_URL`) | Meterless Runtime base URL, normalised to `.../v1` |
 | `METERLESS_API_KEY` (alias `MODEL_API_KEY`) | Runtime token. `rt-local` and placeholders are rejected |
 | `METERLESS_AUTODETECT` | Probe local ports 8088, 8090, 8787, 11434 when no base URL is set |
 | `MODEL_ID` | Routing id. Default `meterless/auto` |
-| `LIVE_PROVIDER` | `meterless` (default) or `sample`. With `sample`, live mode reads live Zetaris data but drafts wording with the deterministic local provider, so the data path can be verified without Meterless credentials. The result's `mode.provider` field says which provider ran |
+| `LIVE_PROVIDER` | `meterless` (default) or `sample`. With `sample`, live mode reads live Zetaris data but drafts wording with the deterministic local provider, so the data path can be verified without Meterless credentials. The result's `mode.provider` field says which provider ran. A `LIVE_PROVIDER=sample` run is **not** a live run of the whole agent: only the data comes from Zetaris |
 | `NVIDIA_API_KEY` | Read and masked by the config; no call in the current code uses it, because NVIDIA models are reached through the Meterless Runtime |
 | `ENGINE` | `stub` (default) or `meterless` (placeholder, see section 8) |
 | `RUN_TIMEOUT_S`, `MAX_STEPS`, `MAX_MODEL_CALLS`, `MAX_REFINEMENTS` | Run bounds |
@@ -163,7 +163,7 @@ question -> Planner -> Investigator -> Critic -> Explainer -> answer + trace
 
 Status lines reflect the state of the code on 22 Oct 2026 and must be updated after any live run [AUTHOR].
 
-- **Zetaris.** `ZetarisSource` posts to `{ZETARIS_REST_URL}/sql-editor/sqls/run` with a Bearer key and `X-Org-ID` and `X-Request-ID` headers. The body is `{queryId, sql, source:"SqlEditor", limit}`, and rows come back as lists of strings in SELECT order. The shape follows Zetaris's own Apache-2.0 runner (`zetaris/getting-started`, `scripts/zetaris_sql.py`) and is covered by fake-server contract tests. **Status: not yet run against a live Zetaris instance.** A managed AWS cluster is planned for Friday 23 Oct 2026.
+- **Zetaris.** `ZetarisSource` posts to `{ZETARIS_REST_URL}/sql-editor/sqls/run` with a Bearer key and `X-Org-ID` and `X-Request-ID` headers. The body is `{queryId, sql, source:"SqlEditor", limit}`, and rows come back as lists of strings in SELECT order. Each query asks for at most 1000 rows unless it sets its own limit (the vendor client's default is 100); this is logged at the start of a live run, and a result that reaches the limit is flagged as truncated. The shape follows Zetaris's own Apache-2.0 runner (`zetaris/getting-started`, `scripts/zetaris_sql.py`) and is covered by fake-server contract tests. **Status: not yet run against a live Zetaris instance.** A managed AWS cluster is planned for Friday 23 Oct 2026.
 - **Meterless.** The Meterless Runtime is the OpenAI-compatible model provider (provider contract v4, `meterless-app`/`meterless-scope` headers, base-URL normalisation). **Status: not yet run live.** H-MEM persistent memory sits behind `EngineAdapter`. `HMemStub` works offline. `HMemMeterless` is a **placeholder**: selecting it (`ENGINE=meterless`) fails with `EngineNotConfigured` until the conformance-ported engine or credentials land. The stub is not claimed to pass the Meterless conformance suite.
 - **NVIDIA via Nightshift.** In live mode Nemotron is the intended model, reached through Nightshift behind the Meterless Runtime, so no local GPU is needed. **Status: not yet run live.** [AUTHOR TO FILL: routing id used in the live run.]
 - **Cursor.** Announced by the organiser as optional. [AUTHOR TO FILL: whether and how Cursor was used.]
@@ -188,7 +188,7 @@ pip install pytest
 pytest -q
 ```
 
-- 132 tests pass.
+- 141 tests pass.
 - CI (GitHub Actions, ubuntu-24.04, `.github/workflows/proof.yml`) runs on every push from a clean checkout. It runs pytest, a Docker build, the CLI in sample mode with `--network none`, and HTTP `POST /run` in sample mode.
 - Mutation controls show the tests detect broken safeguards:
   - A critic that accepts everything: 6 failures.

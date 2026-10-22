@@ -38,6 +38,8 @@ AGG_FNS = ("sum", "count", "avg", "min", "max", "count_distinct")
 TABLES = ("orders", "tickets", "shipments")
 MAX_LIMIT = 5000
 DEFAULT_LIMIT = 1000
+# RestChannel.run(sql, limit=100) in zetaris/getting-started scripts/zetaris_sql.py.
+VENDOR_CLIENT_LIMIT = 100
 
 SCHEMA: dict[str, dict[str, str]] = {
     "orders": {
@@ -532,10 +534,12 @@ class ZetarisSource:
     BACKOFFS = (0.5, 1.5)
 
     def __init__(self, base_url: str, api_key: str, tables: Optional[dict] = None,
-                 timeout_s: float = 20.0, org_id: str = "1") -> None:
+                 timeout_s: float = 20.0, org_id: Optional[str] = None) -> None:
         # base_url is the direct REST API base ending in /api/v1.0 (ZETARIS_REST_URL).
         self.base_url = (base_url or "").strip().rstrip("/")
-        self.org_id = str(org_id or "1").strip()
+        self.org_id = str(org_id or "").strip()
+        if not self.org_id:
+            raise ConfigError("ZETARIS_ORG_ID is required (Zetaris: Management > Organisation > ID)")
         self._api_key = api_key
         self.timeout_s = float(timeout_s)
         self.tables = {t: t for t in TABLES}

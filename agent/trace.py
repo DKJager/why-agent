@@ -251,6 +251,11 @@ class TraceWriter:
             self._echo(lvl, f"[{lvl}] run_id={self.run_id} {agent_name} {action}: {out_sum}")
         return record
 
+    def note(self, level: str, message: str) -> None:
+        """A plain log line (not a trace record)."""
+        lvl = str(level).upper() if str(level).upper() in _LEVEL_NUM else "INFO"
+        self._echo(lvl, f"[{lvl}] run_id={self.run_id} {self.redactor.redact(message)}")
+
     def log_completed(self, seconds: float) -> None:
         """Final stdout line of a run."""
         with self._lock:

@@ -14,7 +14,7 @@ DEFAULT_BASE_URL = "http://127.0.0.1:8088/v1"
 _TRUE = {"true", "1", "yes", "on"}
 _FALSE = {"false", "0", "no", "off"}
 _LEVELS = ("DEBUG", "INFO", "WARNING", "ERROR")
-_PLACEHOLDERS = {"", "rt-local", "your-key-here", "changeme"}
+_PLACEHOLDERS = {"", "rt-local", "your-key-here", "changeme", "your-org-id"}
 
 
 def _raw(env: Mapping[str, str], *names: str) -> Optional[str]:
@@ -85,7 +85,8 @@ class Config:
     provider_timeout_s: float = 180.0
     source_timeout_s: float = 20.0
     zetaris_base_url: Optional[str] = None  # direct REST base, from ZETARIS_REST_URL
-    zetaris_org_id: str = "1"
+    zetaris_org_id: Optional[str] = None  # ZETARIS_ORG_ID, required in live mode (no default)
+    zetaris_url_from_alias: bool = False  # True when only the legacy ZETARIS_BASE_URL was set
     zetaris_api_key: Optional[str] = None
     zetaris_table_orders: str = "orders"
     zetaris_table_tickets: str = "tickets"
@@ -136,7 +137,9 @@ class Config:
             provider_timeout_s=_float(env, "PROVIDER_TIMEOUT_S", 180.0, 0.001),
             source_timeout_s=_float(env, "SOURCE_TIMEOUT_S", 20.0, 0.001),
             zetaris_base_url=_raw(env, "ZETARIS_REST_URL", "ZETARIS_BASE_URL"),
-            zetaris_org_id=_raw(env, "ZETARIS_ORG_ID") or "1",
+            zetaris_url_from_alias=(_raw(env, "ZETARIS_REST_URL") is None
+                                    and _raw(env, "ZETARIS_BASE_URL") is not None),
+            zetaris_org_id=_raw(env, "ZETARIS_ORG_ID"),
             zetaris_api_key=_raw(env, "ZETARIS_API_KEY"),
             zetaris_table_orders=_raw(env, "ZETARIS_TABLE_ORDERS") or "orders",
             zetaris_table_tickets=_raw(env, "ZETARIS_TABLE_TICKETS") or "tickets",
@@ -196,6 +199,8 @@ class Config:
             missing.append("ZETARIS_REST_URL")
         if self._is_placeholder(self.zetaris_api_key):
             missing.append("ZETARIS_API_KEY")
+        if self._is_placeholder(self.zetaris_org_id):
+            missing.append("ZETARIS_ORG_ID")
         # A placeholder meterless token (e.g. rt-local) is reported by the
         # provider as ProviderUnauthorized, so only emptiness counts here.
         if self.live_provider == "meterless" and not self.meterless_runtime_token:
@@ -209,6 +214,25 @@ class Config:
                 "Live mode requires credentials: " + ", ".join(missing),
                 details={"missing": missing},
             )
+        if self.zetaris_url_from_alias and not (self.zetaris_base_url or "").rstrip("/").endswith("/api/v1.0"):
+            # Zetaris's own scripts use ZETARIS_BASE_URL for the web UI origin; only
+            # accept the alias when it is clearly the direct REST API base.
+            raise ConfigError(
+                "ZETARIS_BASE_URL is set but is not a REST API base ending in /api/v1.0; "
+                "set ZETARIS_REST_URL to the direct REST API base instead.",
+                details={"var": "ZETARIS_BASE_URL"},
+            )
+
+    def zetaris_notes(self) -> list[tuple[str, str]]:
+        """Log lines for a live Zetaris run: (level, message). No secrets."""
+        from .sources import DEFAULT_LIMIT, VENDOR_CLIENT_LIMIT
+        notes = [("INFO", f"Zetaris row limit per query is {DEFAULT_LIMIT} unless a query sets one "
+                          f"(the vendor client defaults to {VENDOR_CLIENT_LIMIT}); results at the limit "
+                          "are flagged as truncated.")]
+        if self.zetaris_url_from_alias:
+            notes.insert(0, ("WARNING", "ZETARIS_BASE_URL is a legacy alias here; set ZETARIS_REST_URL "
+                                        "(Zetaris's own scripts use ZETARIS_BASE_URL for the web UI origin)."))
+        return notes
 
     # ---- helpers ------------------------------------------------------
     @property
