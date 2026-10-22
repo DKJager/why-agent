@@ -75,3 +75,22 @@ def test_note_writes_a_log_line(tmp_path):
     tw = TraceWriter("t18", log_dir=str(tmp_path), level="INFO", stream=buf)
     tw.note("WARNING", "alias in use")
     assert "[WARNING] run_id=t18 alias in use" in buf.getvalue()
+
+
+def test_live_run_logs_alias_warning_and_limit(tmp_path):
+    # End to end through run.py: the notes are written at the start of a live Zetaris run.
+    import os
+    import subprocess
+    import sys
+    from pathlib import Path
+    root = Path(__file__).resolve().parents[1]
+    env = {"PATH": os.environ.get("PATH", ""), "SAMPLE_MODE": "false", "LIVE_PROVIDER": "sample",
+           "ZETARIS_BASE_URL": "http://127.0.0.1:9/api/v1.0", "ZETARIS_ORG_ID": "5",
+           "ZETARIS_API_KEY": "zk-T18-KEY-0000", "SOURCE_TIMEOUT_S": "1", "LOG_DIR": str(tmp_path),
+           "HMEM_PATH": str(tmp_path / "m.json"), "NO_PROXY": "127.0.0.1,localhost"}
+    p = subprocess.run([sys.executable, "run.py", "Why did EU revenue drop in week 41?", "--run-id", "t18e2e"],
+                       cwd=root, env=env, capture_output=True, text=True, timeout=60)
+    out = p.stdout + p.stderr
+    assert "[WARNING] run_id=t18e2e ZETARIS_BASE_URL is a legacy alias" in out
+    assert "row limit per query is 1000" in out and "defaults to 100" in out
+    assert "zk-T18-KEY-0000" not in out

@@ -188,7 +188,7 @@ pip install pytest
 pytest -q
 ```
 
-- 141 tests pass.
+- 142 tests pass.
 - CI (GitHub Actions, ubuntu-24.04, `.github/workflows/proof.yml`) runs on every push from a clean checkout. It runs pytest, a Docker build, the CLI in sample mode with `--network none`, and HTTP `POST /run` in sample mode.
 - Mutation controls show the tests detect broken safeguards:
   - A critic that accepts everything: 6 failures.
