@@ -102,7 +102,7 @@ def _build_components(config: Config) -> dict:
     provider = MeterlessProvider(base, token, model_id=config.model_id,
                                  timeout_s=config.provider_timeout_s)
     source = ZetarisSource(config.zetaris_base_url, config.zetaris_api_key, config.zetaris_tables,
-                           config.source_timeout_s)
+                           config.source_timeout_s, org_id=config.zetaris_org_id)
     if config.engine == "meterless":
         HMemMeterless()  # raises NotConfigured
     engine = build_engine(config)

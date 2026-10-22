@@ -18,6 +18,7 @@ import os
 import re
 import threading
 import time
+import uuid
 from dataclasses import dataclass
 from typing import Any, Literal, Optional, Protocol
 
@@ -531,8 +532,10 @@ class ZetarisSource:
     BACKOFFS = (0.5, 1.5)
 
     def __init__(self, base_url: str, api_key: str, tables: Optional[dict] = None,
-                 timeout_s: float = 20.0) -> None:
+                 timeout_s: float = 20.0, org_id: str = "1") -> None:
+        # base_url is the direct REST API base ending in /api/v1.0 (ZETARIS_REST_URL).
         self.base_url = (base_url or "").strip().rstrip("/")
+        self.org_id = str(org_id or "1").strip()
         self._api_key = api_key
         self.timeout_s = float(timeout_s)
         self.tables = {t: t for t in TABLES}
@@ -607,13 +610,18 @@ class ZetarisSource:
         sql += f" LIMIT {limit}"
         return sql
 
-    # ---- A1: request / response shapes (assumption, isolated here) -------
+    # ---- A1: request / response shapes --------------------------------
+    # Matched to Zetaris's own REST runner (zetaris/getting-started,
+    # scripts/zetaris_sql.py RestChannel): body {queryId, sql, source, limit},
+    # headers Bearer + X-Org-ID + X-Request-ID, rows returned under "data"
+    # as lists of strings in SELECT order. Older dict shapes stay accepted.
     @staticmethod
-    def _build_request(sql: str) -> dict:
-        return {"sql": sql}
+    def _build_request(sql: str, limit: int = 1000) -> dict:
+        return {"queryId": str(uuid.uuid4()), "sql": sql, "source": "SqlEditor",
+                "limit": int(limit)}
 
     @staticmethod
-    def _parse_response(obj: Any) -> list[dict]:
+    def _parse_response(obj: Any, select_cols: Optional[list] = None) -> list[dict]:
         def from_rows(rows: Any, columns: Any) -> Optional[list[dict]]:
             if not isinstance(rows, list):
                 return None
@@ -627,11 +635,11 @@ class ZetarisSource:
             return None
 
         if isinstance(obj, list):
-            got = from_rows(obj, None)
+            got = from_rows(obj, select_cols)
             if got is not None:
                 return got
         elif isinstance(obj, dict):
-            columns = obj.get("columns")
+            columns = obj.get("columns") or select_cols
             for key in ("rows", "data"):
                 if key in obj:
                     got = from_rows(obj[key], columns)
@@ -640,7 +648,7 @@ class ZetarisSource:
             for key in ("result", "results"):
                 if isinstance(obj.get(key), (dict, list)):
                     try:
-                        return ZetarisSource._parse_response(obj[key])
+                        return ZetarisSource._parse_response(obj[key], select_cols)
                     except SourceUnavailable:
                         pass
         raise SourceUnavailable("Unrecognised Zetaris response shape")
@@ -650,6 +658,8 @@ class ZetarisSource:
         url = self.base_url + self.ENDPOINT
         headers = {
             "Authorization": f"Bearer {self._api_key}",
+            "X-Org-ID": self.org_id,
+            "X-Request-ID": str(uuid.uuid4()),
             "Content-Type": "application/json",
         }
         attempts = len(self.BACKOFFS) + 1
@@ -700,8 +710,10 @@ class ZetarisSource:
         sql = self.compile_sql(spec)
         t0 = time.monotonic()
         timeout = self.timeout_s if timeout_s is None else max(0.001, float(timeout_s))
-        obj = self._post(self._build_request(sql), timeout)
-        raw_rows = self._parse_response(obj)
+        obj = self._post(self._build_request(sql, limit), timeout)
+        select_cols = (list(spec.group_by) + [a.alias for a in spec.aggs]) if aggregated \
+            else list(out_cols)
+        raw_rows = self._parse_response(obj, select_cols)
         types = SCHEMA[spec.table]
         rows: list[dict] = []
         for raw in raw_rows:

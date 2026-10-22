@@ -289,6 +289,32 @@ def test_build_request_contains_sql(make_server):
     assert _find_sql(body) == "SELECT 1"
 
 
+def test_build_request_matches_zetaris_runner_shape(make_server):
+    # Shape used by zetaris/getting-started scripts/zetaris_sql.py RestChannel.run
+    src = _source(make_server({}))
+    body = src._build_request("SELECT 1", 7)
+    assert set(body) == {"queryId", "sql", "source", "limit"}
+    assert body["source"] == "SqlEditor" and body["limit"] == 7 and body["queryId"]
+
+
+def test_official_list_rows_mapped_in_select_order(make_server):
+    # Zetaris REST returns {"data": [["v1", "v2"], ...]} with string values,
+    # decimals possibly in exponent form.
+    rows = [["DE", "1.2345E3", "4"], ["FR", "250.5", "2"]]
+    srv = make_server({("POST", PATH): (200, {"data": rows})})
+    src = ZetarisSource(base_url=srv.url, api_key=KEY, tables=TABLES, timeout_s=5, org_id="42")
+    spec = QuerySpec(table="orders", group_by=("country",),
+                     aggs=(Agg("sum", "order_value_eur", "rev"), Agg("count", None, "n")))
+    res = src.query(spec)
+    assert res.rows[0]["country"] == "DE"
+    assert res.rows[0]["rev"] == 1234.5 and res.rows[0]["n"] == 4
+    assert res.rows[1] == {"country": "FR", "rev": 250.5, "n": 2}
+    h = srv.requests[-1]["headers"]
+    assert h["x-org-id"] == "42" and h["x-request-id"]
+    assert h["authorization"] == f"Bearer {KEY}"
+    assert srv.requests[-1]["body"]["source"] == "SqlEditor"
+
+
 def test_parse_response_tolerates_three_shapes(make_server):
     src = _source(make_server({}))
     assert src._parse_response({"rows": [{"a": 1}]}) == [{"a": 1}]

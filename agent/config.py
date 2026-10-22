@@ -83,7 +83,8 @@ class Config:
     model_id: str = "meterless/auto"
     provider_timeout_s: float = 180.0
     source_timeout_s: float = 20.0
-    zetaris_base_url: Optional[str] = None
+    zetaris_base_url: Optional[str] = None  # direct REST base, from ZETARIS_REST_URL
+    zetaris_org_id: str = "1"
     zetaris_api_key: Optional[str] = None
     zetaris_table_orders: str = "orders"
     zetaris_table_tickets: str = "tickets"
@@ -127,7 +128,8 @@ class Config:
             model_id=_raw(env, "MODEL_ID") or "meterless/auto",
             provider_timeout_s=_float(env, "PROVIDER_TIMEOUT_S", 180.0, 0.001),
             source_timeout_s=_float(env, "SOURCE_TIMEOUT_S", 20.0, 0.001),
-            zetaris_base_url=_raw(env, "ZETARIS_BASE_URL"),
+            zetaris_base_url=_raw(env, "ZETARIS_REST_URL", "ZETARIS_BASE_URL"),
+            zetaris_org_id=_raw(env, "ZETARIS_ORG_ID") or "1",
             zetaris_api_key=_raw(env, "ZETARIS_API_KEY"),
             zetaris_table_orders=_raw(env, "ZETARIS_TABLE_ORDERS") or "orders",
             zetaris_table_tickets=_raw(env, "ZETARIS_TABLE_TICKETS") or "tickets",
@@ -184,7 +186,7 @@ class Config:
     def missing_live_credentials(self) -> list[str]:
         missing: list[str] = []
         if self._is_placeholder(self.zetaris_base_url) or "example" in (self.zetaris_base_url or "").lower().split("/")[2:3][0:1].__str__():
-            missing.append("ZETARIS_BASE_URL")
+            missing.append("ZETARIS_REST_URL")
         if self._is_placeholder(self.zetaris_api_key):
             missing.append("ZETARIS_API_KEY")
         # A placeholder meterless token (e.g. rt-local) is reported by the
