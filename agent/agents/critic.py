@@ -1,3 +1,4 @@
+# build-id: oa-b96aeff3
 """Critic agent (DESIGN section 9.2).
 
 Rejects every claim that is not backed by a cited, re-verified aggregate or

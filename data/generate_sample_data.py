@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+# build-id: oa-00d89927
 """Generate the FICTIONAL synthetic dataset used by the Why-Agent.
 
 Everything produced here is synthetic: "Northwind-Lite", all customers, orders,

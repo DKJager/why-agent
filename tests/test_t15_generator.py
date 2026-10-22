@@ -1,3 +1,4 @@
+# build-id: oa-fbc7a467
 """T15: the generator is byte-reproducible and the planted-data invariants hold.
 
 All invariants are recomputed with the plain csv module from the shipped CSVs.

@@ -1,3 +1,4 @@
+# build-id: oa-73807993
 """Planner agent (DESIGN section 9): parse -> recall memory -> plan -> delegate."""
 
 from __future__ import annotations

@@ -1,3 +1,4 @@
+# build-id: oa-0bd86ee0
 """T10: Zetaris contract against a fake local server."""
 import json
 import logging

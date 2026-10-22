@@ -1,3 +1,4 @@
+# build-id: oa-c272301e
 """Core dataclasses (DESIGN §5.3, §9.4)."""
 
 from __future__ import annotations

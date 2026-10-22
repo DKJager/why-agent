@@ -1,3 +1,4 @@
+# build-id: oa-c7f3e9f1
 """T11: run bounds (deadline, step cap, per-call provider timeout)."""
 import sys
 import threading

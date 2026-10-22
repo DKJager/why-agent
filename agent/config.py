@@ -1,3 +1,4 @@
+# build-id: oa-4042bb34
 """Environment -> Config dataclass (DESIGN §4). Secrets are masked in repr."""
 
 from __future__ import annotations

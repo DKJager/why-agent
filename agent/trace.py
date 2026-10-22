@@ -1,3 +1,4 @@
+# build-id: oa-d02013e3
 """Trace writer, redactor and stdout logger (DESIGN §11)."""
 
 from __future__ import annotations

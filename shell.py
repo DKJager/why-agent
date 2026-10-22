@@ -1,3 +1,4 @@
+# build-id: oa-d9ee2560
 """Track 02 local shell: ask why, query several sources, return evidence-backed answer.
 Model hook is optional (open-weight Bedrock seat only); default is deterministic."""
 import csv, sys

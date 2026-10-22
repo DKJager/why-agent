@@ -1,3 +1,4 @@
+# build-id: oa-23ea9159
 """HTTP interface (DESIGN section 12.2).
 
 ``handle_run(payload) -> (status, body)`` is a pure function; the HTTP

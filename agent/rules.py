@@ -1,3 +1,4 @@
+# build-id: oa-0086468c
 """Deterministic parse / plan / narrate rules (DESIGN sections 7.4, 9.4).
 
 Used by ``SampleProvider`` and as the fallback when a model misbehaves.

@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+# build-id: oa-048f6ab0
 """Why-Agent CLI.
 
     python run.py "Why did EU revenue drop in week 41?" [--run-id ID] [--json] [--out PATH]

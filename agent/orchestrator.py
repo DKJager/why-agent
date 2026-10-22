@@ -1,3 +1,4 @@
+# build-id: oa-feeec391
 """Orchestrator: the investigation loop, limits and error mapping (DESIGN section 10).
 
 ``run_question`` never raises: it returns either the success JSON (section 12.3)

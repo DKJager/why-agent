@@ -1,3 +1,4 @@
+# build-id: oa-b895baed
 """T09: Meterless provider contract, exercised against a fake local OpenAI-compatible server."""
 import inspect
 import json

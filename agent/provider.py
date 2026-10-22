@@ -1,3 +1,4 @@
+# build-id: oa-6a523276
 """Model provider: Meterless Runtime client, URL helpers, SampleProvider (DESIGN section 7)."""
 
 from __future__ import annotations

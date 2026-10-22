@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+# build-id: oa-8bfbc3cc
 """Generate samples/outputs/* by running the three sample questions through run.py.
 
 Outputs are only ever produced by this script; never write or edit them by hand.

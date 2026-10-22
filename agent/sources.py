@@ -1,3 +1,4 @@
+# build-id: oa-2a52fa28
 """Data sources: QuerySpec, CsvSource, ZetarisSource (DESIGN section 6).
 
 Agents never write SQL or touch CSVs directly: they build a QuerySpec.

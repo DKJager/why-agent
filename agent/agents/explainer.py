@@ -1,3 +1,4 @@
+# build-id: oa-f0935e52
 """Explainer agent (DESIGN section 9.4).
 
 Builds the final ``Answer`` from accepted claims only. The narrative comes

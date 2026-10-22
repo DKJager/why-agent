@@ -1,3 +1,4 @@
+# build-id: oa-3d6b988e
 """Investigator agent (DESIGN section 9.1).
 
 Deterministic in both modes: it builds ``QuerySpec`` objects, runs them through

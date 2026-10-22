@@ -1,3 +1,4 @@
+# build-id: oa-0b4bd7db
 """T12: secrets never reach trace, stdout, stderr or result JSON."""
 import json
 import os

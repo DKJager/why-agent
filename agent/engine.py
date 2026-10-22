@@ -1,3 +1,4 @@
+# build-id: oa-20310e3c
 """H-MEM engine adapters (DESIGN section 8).
 
 * ``HMemStub``: fully functional offline JSON store.

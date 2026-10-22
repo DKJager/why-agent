@@ -1,3 +1,4 @@
+# build-id: oa-f9471bb7
 """Structured error hierarchy and the error JSON contract (DESIGN §13)."""
 
 from __future__ import annotations
