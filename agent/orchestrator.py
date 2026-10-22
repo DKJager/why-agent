@@ -85,6 +85,16 @@ def _build_components(config: Config) -> dict:
                 "config": config}
 
     config = _apply_connect_link(config)
+    if config.live_provider == "sample":
+        # Live data, deterministic local provider: proves the Zetaris path without
+        # Meterless credentials. The result's mode block reports provider "sample".
+        config.validate_live()
+        source = ZetarisSource(config.zetaris_base_url, config.zetaris_api_key, config.zetaris_tables,
+                               config.source_timeout_s, org_id=config.zetaris_org_id)
+        if config.engine == "meterless":
+            HMemMeterless()  # raises NotConfigured
+        return {"source": source, "provider": SampleProvider(), "engine": build_engine(config),
+                "sample": False, "config": config}
     token = config.meterless_runtime_token
     if token:
         try:

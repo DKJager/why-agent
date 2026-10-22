@@ -75,6 +75,7 @@ class Config:
     log_dir: str = "logs"
     data_dir: str = "data/sample"
     engine: str = "stub"
+    live_provider: str = "meterless"  # LIVE_PROVIDER: model provider used when SAMPLE_MODE=false
     hmem_path: str = ".hmem/store.json"
     # raw value (normalised later by provider.normalize_base_url); None -> autodetect
     meterless_base_url: Optional[str] = DEFAULT_BASE_URL
@@ -109,6 +110,11 @@ class Config:
         if engine not in ("stub", "meterless"):
             raise ConfigError("Invalid ENGINE (expected 'stub' or 'meterless')", details={"var": "ENGINE"})
 
+        live_provider = (_raw(env, "LIVE_PROVIDER") or "meterless").lower()
+        if live_provider not in ("meterless", "sample"):
+            raise ConfigError("Invalid LIVE_PROVIDER (expected 'meterless' or 'sample')",
+                              details={"var": "LIVE_PROVIDER"})
+
         autodetect = _bool(env, "METERLESS_AUTODETECT", False)
         base = _raw(env, "METERLESS_BASE_URL", "MODEL_BASE_URL")
         if base is None and not autodetect:
@@ -121,6 +127,7 @@ class Config:
             log_dir=_raw(env, "LOG_DIR") or "logs",
             data_dir=_raw(env, "DATA_DIR") or "data/sample",
             engine=engine,
+            live_provider=live_provider,
             hmem_path=_raw(env, "HMEM_PATH") or ".hmem/store.json",
             meterless_base_url=base,
             meterless_runtime_token=_raw(env, "METERLESS_API_KEY", "MODEL_API_KEY"),
@@ -191,7 +198,7 @@ class Config:
             missing.append("ZETARIS_API_KEY")
         # A placeholder meterless token (e.g. rt-local) is reported by the
         # provider as ProviderUnauthorized, so only emptiness counts here.
-        if not self.meterless_runtime_token:
+        if self.live_provider == "meterless" and not self.meterless_runtime_token:
             missing.append("METERLESS_API_KEY")
         return missing
 
