@@ -1,0 +1,5 @@
+.env
+logs/
+.hmem/
+__pycache__/
+*.bak-*

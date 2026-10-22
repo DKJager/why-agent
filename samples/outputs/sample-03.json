@@ -1,0 +1,455 @@
+{
+  "run_id": "sample-03",
+  "status": "success",
+  "output": {
+    "question": "Why did US revenue drop in week 41?",
+    "parsed": {
+      "metric": "net_revenue",
+      "region": "US",
+      "iso_year": 2026,
+      "iso_week": 41,
+      "direction": "drop"
+    },
+    "summary": "No significant change in us net revenue in week 41; there is no cause to explain.",
+    "answer": {
+      "headline": "No significant change in us net revenue in week 41; there is no cause to explain.",
+      "drivers": [],
+      "ruled_out": [
+        {
+          "claim_id": "C2",
+          "text": "Demand is not the cause: gross order value before cancellations changed by only 1.9% versus the prior week and 0.8% versus the four-week mean [E1].",
+          "evidence_ids": [
+            "E1"
+          ]
+        }
+      ],
+      "prior_knowledge": [
+        {
+          "memory_id": "m-8ff6ad20f66d",
+          "entity": "week:2026-W41",
+          "fact_key": "driver:ticket_carrier@2026-W41",
+          "fact": "The change is concentrated in the 'delivery_delay' and 'where_is_my_order' ticket categories: 39 tickets above the four-week mean, 100.0% of the total change. 41 of the 41 orders behind these tickets (100.0%) belong to carrier NordExpress, and 17 of those orders were cancelled. NordExpress shipments were late (three or more days) in 91.7% of cases in week 41 versus 11.9% in the four prior weeks.",
+          "confidence": 1.0,
+          "last_confirmed_at": "2026-10-22T17:46:48Z",
+          "label": "prior knowledge (hypothesis, not evidence)"
+        },
+        {
+          "memory_id": "m-eefc0d2c9bf9",
+          "entity": "week:2026-W41",
+          "fact_key": "delta:ticket_count@2026-W41",
+          "fact": "EU support tickets were 52 in week 41, up 300.0% from 13 in week 40 and 285.2% above the four-week mean of 14.",
+          "confidence": 0.95,
+          "last_confirmed_at": "2026-10-22T17:46:48Z",
+          "label": "prior knowledge (hypothesis, not evidence)"
+        },
+        {
+          "memory_id": "m-21e303c54a0f",
+          "entity": "week:2026-W41",
+          "fact_key": "driver:carrier_delivery_delay@2026-W41",
+          "fact": "Cancelled orders with reason 'delivery_delay' on carrier NordExpress rose from €159 in week 40 to €3,347 in week 41, which explains 106.0% of the €3,007 drop in net revenue. NordExpress shipments were late (three or more days) in 91.7% of cases in week 41 versus 11.9% in the four prior weeks, and 37 of 42 affected orders had a late shipment. Support tickets rose to 52 in week 41 (four-week mean 14), and 50 of them (96.2%) are tied to NordExpress orders.",
+          "confidence": 1.0,
+          "last_confirmed_at": "2026-10-22T17:46:47Z",
+          "label": "prior knowledge (hypothesis, not evidence)"
+        },
+        {
+          "memory_id": "m-7ffd7862bb0a",
+          "entity": "week:2026-W41",
+          "fact_key": "delta:net_revenue@2026-W41",
+          "fact": "EU net revenue was €6,990 in week 41, down 30.1% from €9,998 in week 40 and 31.4% below the four-week mean of €10,197.",
+          "confidence": 0.95,
+          "last_confirmed_at": "2026-10-22T17:46:47Z",
+          "label": "prior knowledge (hypothesis, not evidence)"
+        },
+        {
+          "memory_id": "m-82a878d4519b",
+          "entity": "metric:net_revenue",
+          "fact_key": "delta:net_revenue@2026-W41",
+          "fact": "EU net revenue was €6,990 in week 41, down 30.1% from €9,998 in week 40 and 31.4% below the four-week mean of €10,197.",
+          "confidence": 0.95,
+          "last_confirmed_at": "2026-10-22T17:46:47Z",
+          "label": "prior knowledge (hypothesis, not evidence)"
+        }
+      ],
+      "caveats": [
+        "0 claims were left unverified.",
+        "Data is current as of 2026-10-18.",
+        "Sample mode: all data is fictional synthetic data; no real company, customer or carrier is represented.",
+        "Prior knowledge from H-MEM is a hypothesis, not evidence, and was not used to support any finding."
+      ],
+      "text": "No significant change in us net revenue in week 41; there is no cause to explain.\n\nUS net revenue changed by only 2.1% versus the prior week and 2.2% versus the four-week mean, below the significance threshold, so there is no significant change to explain [E1].\n\nRuled out:\n- Demand is not the cause: gross order value before cancellations changed by only 1.9% versus the prior week and 0.8% versus the four-week mean [E1]."
+    },
+    "findings": [
+      {
+        "claim_id": "C1",
+        "kind": "observation",
+        "text": "US net revenue changed by only 2.1% versus the prior week and 2.2% versus the four-week mean, below the significance threshold, so there is no significant change to explain [E1].",
+        "numbers": [
+          {
+            "evidence_id": "E1",
+            "name": "net_wow_abs_pct",
+            "value": 2.1,
+            "fmt": "pct1"
+          },
+          {
+            "evidence_id": "E1",
+            "name": "net_base_abs_pct",
+            "value": 2.2,
+            "fmt": "pct1"
+          }
+        ],
+        "evidence_ids": [
+          "E1"
+        ],
+        "memory_id": null,
+        "confidence": 0.9,
+        "explained_share": null,
+        "entities": [
+          "metric:net_revenue",
+          "region:US",
+          "week:2026-W41"
+        ],
+        "fact_key": null
+      },
+      {
+        "claim_id": "C2",
+        "kind": "ruled_out",
+        "text": "Demand is not the cause: gross order value before cancellations changed by only 1.9% versus the prior week and 0.8% versus the four-week mean [E1].",
+        "numbers": [
+          {
+            "evidence_id": "E1",
+            "name": "gross_wow_abs_pct",
+            "value": 1.9,
+            "fmt": "pct1"
+          },
+          {
+            "evidence_id": "E1",
+            "name": "gross_base_abs_pct",
+            "value": 0.8,
+            "fmt": "pct1"
+          }
+        ],
+        "evidence_ids": [
+          "E1"
+        ],
+        "memory_id": null,
+        "confidence": 0.9,
+        "explained_share": null,
+        "entities": [
+          "metric:gross_order_value",
+          "region:US",
+          "week:2026-W41"
+        ],
+        "fact_key": null
+      }
+    ],
+    "unverified": [],
+    "evidence": [
+      {
+        "evidence_id": "E1",
+        "source": "orders",
+        "description": "Weekly net revenue, gross order value and cancellations (US, weeks 37-41)",
+        "query": {
+          "table": "orders",
+          "filters": [
+            {
+              "column": "iso_year",
+              "op": "=",
+              "value": 2026
+            },
+            {
+              "column": "iso_week",
+              "op": ">=",
+              "value": 37
+            },
+            {
+              "column": "iso_week",
+              "op": "<=",
+              "value": 41
+            },
+            {
+              "column": "region",
+              "op": "=",
+              "value": "US"
+            }
+          ],
+          "select": [],
+          "group_by": [
+            "iso_week",
+            "status"
+          ],
+          "aggs": [
+            {
+              "fn": "sum",
+              "column": "order_value_eur",
+              "alias": "gross"
+            },
+            {
+              "fn": "count",
+              "column": "order_id",
+              "alias": "n"
+            }
+          ],
+          "order_by": [
+            [
+              "iso_week",
+              "asc"
+            ],
+            [
+              "status",
+              "asc"
+            ]
+          ],
+          "limit": 1000,
+          "derive": "weekly_revenue",
+          "params": {
+            "week": 41
+          }
+        },
+        "query_text": "csv:orders where iso_year=2026 and iso_week>=37 and iso_week<=41 and region='US' group_by(iso_week,status) sum(order_value_eur) count(order_id) order_by(iso_week asc,status asc)",
+        "values": {
+          "net_w": 4313.19,
+          "net_prev": 4222.5,
+          "net_base_mean": 4218.58,
+          "net_wow_pct": 2.1,
+          "net_wow_abs_pct": 2.1,
+          "net_base_pct": 2.2,
+          "net_base_abs_pct": 2.2,
+          "net_delta_eur": 90.69,
+          "net_change_abs_eur": 90.69,
+          "gross_w": 4432.09,
+          "gross_prev": 4350.68,
+          "gross_wow_pct": 1.9,
+          "gross_wow_abs_pct": 1.9,
+          "gross_base_abs_pct": 0.8,
+          "cancelled_w": 118.9,
+          "cancelled_prev": 128.18,
+          "orders_w": 57.0
+        },
+        "rows": [
+          {
+            "iso_week": 37,
+            "status": "cancelled",
+            "gross": 148.63,
+            "n": 2
+          },
+          {
+            "iso_week": 37,
+            "status": "delivered",
+            "gross": 4215.08,
+            "n": 53
+          },
+          {
+            "iso_week": 38,
+            "status": "cancelled",
+            "gross": 255.02,
+            "n": 2
+          },
+          {
+            "iso_week": 38,
+            "status": "delivered",
+            "gross": 4169.19,
+            "n": 52
+          },
+          {
+            "iso_week": 39,
+            "status": "cancelled",
+            "gross": 182.09,
+            "n": 2
+          },
+          {
+            "iso_week": 39,
+            "status": "delivered",
+            "gross": 4267.55,
+            "n": 52
+          },
+          {
+            "iso_week": 40,
+            "status": "cancelled",
+            "gross": 128.18,
+            "n": 2
+          },
+          {
+            "iso_week": 40,
+            "status": "delivered",
+            "gross": 4222.5,
+            "n": 52
+          },
+          {
+            "iso_week": 41,
+            "status": "cancelled",
+            "gross": 118.9,
+            "n": 2
+          },
+          {
+            "iso_week": 41,
+            "status": "delivered",
+            "gross": 4313.19,
+            "n": 55
+          }
+        ],
+        "row_refs": [],
+        "row_ref_total": 0,
+        "retrieved_at": "2026-10-22T17:46:48Z"
+      }
+    ],
+    "recommendations": [],
+    "memory": {
+      "recalled": [
+        {
+          "memory_id": "m-8ff6ad20f66d",
+          "entity": "week:2026-W41",
+          "fact_key": "driver:ticket_carrier@2026-W41",
+          "fact": "The change is concentrated in the 'delivery_delay' and 'where_is_my_order' ticket categories: 39 tickets above the four-week mean, 100.0% of the total change. 41 of the 41 orders behind these tickets (100.0%) belong to carrier NordExpress, and 17 of those orders were cancelled. NordExpress shipments were late (three or more days) in 91.7% of cases in week 41 versus 11.9% in the four prior weeks.",
+          "evidence_refs": [
+            "E2@run:sample-02",
+            "E4@run:sample-02",
+            "E5@run:sample-02",
+            "O-001331",
+            "O-001334",
+            "O-001344",
+            "O-001353",
+            "O-001367",
+            "S-001484",
+            "S-001486",
+            "S-001488",
+            "S-001489",
+            "S-001502"
+          ],
+          "confidence": 1.0,
+          "source_run_id": "sample-02",
+          "created_at": "2026-10-22T17:46:48Z",
+          "last_confirmed_at": "2026-10-22T17:46:48Z",
+          "confirmations": 1,
+          "status": "confirmed",
+          "superseded_by": null,
+          "supersede_reason": null
+        },
+        {
+          "memory_id": "m-eefc0d2c9bf9",
+          "entity": "week:2026-W41",
+          "fact_key": "delta:ticket_count@2026-W41",
+          "fact": "EU support tickets were 52 in week 41, up 300.0% from 13 in week 40 and 285.2% above the four-week mean of 14.",
+          "evidence_refs": [
+            "E1@run:sample-02"
+          ],
+          "confidence": 0.95,
+          "source_run_id": "sample-02",
+          "created_at": "2026-10-22T17:46:48Z",
+          "last_confirmed_at": "2026-10-22T17:46:48Z",
+          "confirmations": 1,
+          "status": "confirmed",
+          "superseded_by": null,
+          "supersede_reason": null
+        },
+        {
+          "memory_id": "m-21e303c54a0f",
+          "entity": "week:2026-W41",
+          "fact_key": "driver:carrier_delivery_delay@2026-W41",
+          "fact": "Cancelled orders with reason 'delivery_delay' on carrier NordExpress rose from €159 in week 40 to €3,347 in week 41, which explains 106.0% of the €3,007 drop in net revenue. NordExpress shipments were late (three or more days) in 91.7% of cases in week 41 versus 11.9% in the four prior weeks, and 37 of 42 affected orders had a late shipment. Support tickets rose to 52 in week 41 (four-week mean 14), and 50 of them (96.2%) are tied to NordExpress orders.",
+          "evidence_refs": [
+            "E4@run:sample-01",
+            "E1@run:sample-01",
+            "E5@run:sample-01",
+            "E6@run:sample-01",
+            "O-001502",
+            "O-001508",
+            "O-001521",
+            "O-001522",
+            "O-001533",
+            "S-001484",
+            "S-001486",
+            "S-001488",
+            "S-001489",
+            "S-001502",
+            "T-000151",
+            "T-000152",
+            "T-000153",
+            "T-000154",
+            "T-000156"
+          ],
+          "confidence": 1.0,
+          "source_run_id": "sample-01",
+          "created_at": "2026-10-22T17:46:47Z",
+          "last_confirmed_at": "2026-10-22T17:46:47Z",
+          "confirmations": 1,
+          "status": "confirmed",
+          "superseded_by": null,
+          "supersede_reason": null
+        },
+        {
+          "memory_id": "m-7ffd7862bb0a",
+          "entity": "week:2026-W41",
+          "fact_key": "delta:net_revenue@2026-W41",
+          "fact": "EU net revenue was €6,990 in week 41, down 30.1% from €9,998 in week 40 and 31.4% below the four-week mean of €10,197.",
+          "evidence_refs": [
+            "E1@run:sample-01"
+          ],
+          "confidence": 0.95,
+          "source_run_id": "sample-01",
+          "created_at": "2026-10-22T17:46:47Z",
+          "last_confirmed_at": "2026-10-22T17:46:47Z",
+          "confirmations": 1,
+          "status": "confirmed",
+          "superseded_by": null,
+          "supersede_reason": null
+        },
+        {
+          "memory_id": "m-82a878d4519b",
+          "entity": "metric:net_revenue",
+          "fact_key": "delta:net_revenue@2026-W41",
+          "fact": "EU net revenue was €6,990 in week 41, down 30.1% from €9,998 in week 40 and 31.4% below the four-week mean of €10,197.",
+          "evidence_refs": [
+            "E1@run:sample-01"
+          ],
+          "confidence": 0.95,
+          "source_run_id": "sample-01",
+          "created_at": "2026-10-22T17:46:47Z",
+          "last_confirmed_at": "2026-10-22T17:46:47Z",
+          "confirmations": 1,
+          "status": "confirmed",
+          "superseded_by": null,
+          "supersede_reason": null
+        }
+      ],
+      "stored": []
+    },
+    "artifacts": [
+      {
+        "type": "trace",
+        "path": "logs/trace-sample-03.jsonl"
+      }
+    ]
+  },
+  "agents": [
+    {
+      "name": "Planner",
+      "role": "Parses the question, recalls memory, splits it into per-source sub-questions"
+    },
+    {
+      "name": "Investigator",
+      "role": "Queries orders/tickets/shipments, computes deltas, joins sources, proposes cited claims"
+    },
+    {
+      "name": "Critic",
+      "role": "Rejects any claim not backed by a re-verified cited aggregate or row; max 2 refinement loops"
+    },
+    {
+      "name": "Explainer",
+      "role": "Writes the final answer using only accepted claims, with citations"
+    }
+  ],
+  "mode": {
+    "sample_mode": true,
+    "source": "csv",
+    "provider": "sample",
+    "engine": "hmem-stub",
+    "model": "sample"
+  },
+  "degraded": false,
+  "warnings": [],
+  "trace_id": "trace-sample-03",
+  "log_file": "logs/trace-sample-03.jsonl",
+  "execution_time_seconds": 0.028,
+  "data_fingerprint": "sha256:410c53792e1883ef6685e3bc13a6384dcde712f43f8259ee37bd2bc3937ffd8f",
+  "generated_by": "run.py"
+}

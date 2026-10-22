@@ -1,0 +1,2446 @@
+{
+  "run_id": "sample-01",
+  "status": "success",
+  "output": {
+    "question": "Why did EU revenue drop in week 41?",
+    "parsed": {
+      "metric": "net_revenue",
+      "region": "EU",
+      "iso_year": 2026,
+      "iso_week": 41,
+      "direction": "drop"
+    },
+    "summary": "EU net revenue dropped in week 41: Cancelled orders with reason 'delivery_delay' on carrier NordExpress rose from €159 in week 40 to €3,347 in week 41, which explains 106.0% of the €3,007 drop in net revenue [E4]. NordExpress shipments were late (three or more days) in 91.7% of cases in week 41 versus 11.9% in the four prior weeks, and 37 of 42 affected orders had a late shipment [E5]. Support tickets rose to 52 in week 41 (four-week mean 14), and 50 of them (96.2%) are tied to NordExpress orders [E6]",
+    "answer": {
+      "headline": "EU net revenue dropped in week 41: Cancelled orders with reason 'delivery_delay' on carrier NordExpress rose from €159 in week 40 to €3,347 in week 41, which explains 106.0% of the €3,007 drop in net revenue [E4]. NordExpress shipments were late (three or more days) in 91.7% of cases in week 41 versus 11.9% in the four prior weeks, and 37 of 42 affected orders had a late shipment [E5]. Support tickets rose to 52 in week 41 (four-week mean 14), and 50 of them (96.2%) are tied to NordExpress orders [E6]",
+      "drivers": [
+        {
+          "rank": 1,
+          "claim_id": "C4",
+          "text": "Cancelled orders with reason 'delivery_delay' on carrier NordExpress rose from €159 in week 40 to €3,347 in week 41, which explains 106.0% of the €3,007 drop in net revenue [E4]. NordExpress shipments were late (three or more days) in 91.7% of cases in week 41 versus 11.9% in the four prior weeks, and 37 of 42 affected orders had a late shipment [E5]. Support tickets rose to 52 in week 41 (four-week mean 14), and 50 of them (96.2%) are tied to NordExpress orders [E6].",
+          "explained_share": 1.06,
+          "confidence": 1.0,
+          "evidence_ids": [
+            "E4",
+            "E1",
+            "E5",
+            "E6"
+          ]
+        }
+      ],
+      "ruled_out": [
+        {
+          "claim_id": "C2",
+          "text": "Demand is not the cause: gross order value before cancellations changed by only 0.4% versus the prior week and 0.3% versus the four-week mean [E1].",
+          "evidence_ids": [
+            "E1"
+          ]
+        },
+        {
+          "claim_id": "C3",
+          "text": "Country 'DE' is ruled out as the cause: it accounts for only 32.0% of the €3,007 change in net revenue, below the dominance threshold [E3].",
+          "evidence_ids": [
+            "E3",
+            "E1"
+          ]
+        }
+      ],
+      "prior_knowledge": [],
+      "caveats": [
+        "0 claims were left unverified.",
+        "Data is current as of 2026-10-18.",
+        "Sample mode: all data is fictional synthetic data; no real company, customer or carrier is represented."
+      ],
+      "text": "EU net revenue dropped in week 41: Cancelled orders with reason 'delivery_delay' on carrier NordExpress rose from €159 in week 40 to €3,347 in week 41, which explains 106.0% of the €3,007 drop in net revenue [E4]. NordExpress shipments were late (three or more days) in 91.7% of cases in week 41 versus 11.9% in the four prior weeks, and 37 of 42 affected orders had a late shipment [E5]. Support tickets rose to 52 in week 41 (four-week mean 14), and 50 of them (96.2%) are tied to NordExpress orders [E6]\n\nEU net revenue was €6,990 in week 41, down 30.1% from €9,998 in week 40 and 31.4% below the four-week mean of €10,197 [E1].\n\nMain driver(s):\n- Cancelled orders with reason 'delivery_delay' on carrier NordExpress rose from €159 in week 40 to €3,347 in week 41, which explains 106.0% of the €3,007 drop in net revenue [E4]. NordExpress shipments were late (three or more days) in 91.7% of cases in week 41 versus 11.9% in the four prior weeks, and 37 of 42 affected orders had a late shipment [E5]. Support tickets rose to 52 in week 41 (four-week mean 14), and 50 of them (96.2%) are tied to NordExpress orders [E6].\n\nRuled out:\n- Demand is not the cause: gross order value before cancellations changed by only 0.4% versus the prior week and 0.3% versus the four-week mean [E1].\n- Country 'DE' is ruled out as the cause: it accounts for only 32.0% of the €3,007 change in net revenue, below the dominance threshold [E3]."
+    },
+    "findings": [
+      {
+        "claim_id": "C1",
+        "kind": "delta",
+        "text": "EU net revenue was €6,990 in week 41, down 30.1% from €9,998 in week 40 and 31.4% below the four-week mean of €10,197 [E1].",
+        "numbers": [
+          {
+            "evidence_id": "E1",
+            "name": "net_w",
+            "value": 6990.27,
+            "fmt": "eur0"
+          },
+          {
+            "evidence_id": "E1",
+            "name": "net_wow_pct",
+            "value": -30.1,
+            "fmt": "pct1"
+          },
+          {
+            "evidence_id": "E1",
+            "name": "net_prev",
+            "value": 9997.52,
+            "fmt": "eur0"
+          },
+          {
+            "evidence_id": "E1",
+            "name": "net_base_abs_pct",
+            "value": 31.4,
+            "fmt": "pct1"
+          },
+          {
+            "evidence_id": "E1",
+            "name": "net_base_mean",
+            "value": 10196.51,
+            "fmt": "eur0"
+          }
+        ],
+        "evidence_ids": [
+          "E1"
+        ],
+        "memory_id": null,
+        "confidence": 0.95,
+        "explained_share": null,
+        "entities": [
+          "metric:net_revenue",
+          "region:EU",
+          "week:2026-W41"
+        ],
+        "fact_key": "delta:net_revenue@2026-W41"
+      },
+      {
+        "claim_id": "C2",
+        "kind": "ruled_out",
+        "text": "Demand is not the cause: gross order value before cancellations changed by only 0.4% versus the prior week and 0.3% versus the four-week mean [E1].",
+        "numbers": [
+          {
+            "evidence_id": "E1",
+            "name": "gross_wow_abs_pct",
+            "value": 0.4,
+            "fmt": "pct1"
+          },
+          {
+            "evidence_id": "E1",
+            "name": "gross_base_abs_pct",
+            "value": 0.3,
+            "fmt": "pct1"
+          }
+        ],
+        "evidence_ids": [
+          "E1"
+        ],
+        "memory_id": null,
+        "confidence": 0.9,
+        "explained_share": null,
+        "entities": [
+          "metric:gross_order_value",
+          "region:EU",
+          "week:2026-W41"
+        ],
+        "fact_key": null
+      },
+      {
+        "claim_id": "C3",
+        "kind": "ruled_out",
+        "text": "Country 'DE' is ruled out as the cause: it accounts for only 32.0% of the €3,007 change in net revenue, below the dominance threshold [E3].",
+        "numbers": [
+          {
+            "evidence_id": "E3",
+            "name": "top_seg_share_pct",
+            "value": 32.0,
+            "fmt": "pct1"
+          },
+          {
+            "evidence_id": "E1",
+            "name": "net_change_abs_eur",
+            "value": 3007.25,
+            "fmt": "eur0"
+          }
+        ],
+        "evidence_ids": [
+          "E3",
+          "E1"
+        ],
+        "memory_id": null,
+        "confidence": 0.8,
+        "explained_share": null,
+        "entities": [
+          "region:EU",
+          "week:2026-W41"
+        ],
+        "fact_key": null
+      },
+      {
+        "claim_id": "C4",
+        "kind": "driver",
+        "text": "Cancelled orders with reason 'delivery_delay' on carrier NordExpress rose from €159 in week 40 to €3,347 in week 41, which explains 106.0% of the €3,007 drop in net revenue [E4]. NordExpress shipments were late (three or more days) in 91.7% of cases in week 41 versus 11.9% in the four prior weeks, and 37 of 42 affected orders had a late shipment [E5]. Support tickets rose to 52 in week 41 (four-week mean 14), and 50 of them (96.2%) are tied to NordExpress orders [E6].",
+        "numbers": [
+          {
+            "evidence_id": "E4",
+            "name": "cand_cancel_prev_eur",
+            "value": 159.06,
+            "fmt": "eur0"
+          },
+          {
+            "evidence_id": "E4",
+            "name": "cand_cancel_w_eur",
+            "value": 3346.85,
+            "fmt": "eur0"
+          },
+          {
+            "evidence_id": "E4",
+            "name": "cand_share_pct",
+            "value": 106.0,
+            "fmt": "pct1"
+          },
+          {
+            "evidence_id": "E1",
+            "name": "net_change_abs_eur",
+            "value": 3007.25,
+            "fmt": "eur0"
+          },
+          {
+            "evidence_id": "E5",
+            "name": "ship_late_share_w_pct",
+            "value": 91.7,
+            "fmt": "pct1"
+          },
+          {
+            "evidence_id": "E5",
+            "name": "ship_late_share_base_pct",
+            "value": 11.9,
+            "fmt": "pct1"
+          },
+          {
+            "evidence_id": "E5",
+            "name": "join_late_n",
+            "value": 37.0,
+            "fmt": "int"
+          },
+          {
+            "evidence_id": "E5",
+            "name": "join_total_n",
+            "value": 42.0,
+            "fmt": "int"
+          },
+          {
+            "evidence_id": "E6",
+            "name": "tickets_w",
+            "value": 52.0,
+            "fmt": "int"
+          },
+          {
+            "evidence_id": "E6",
+            "name": "tickets_base_mean",
+            "value": 14.0,
+            "fmt": "int"
+          },
+          {
+            "evidence_id": "E6",
+            "name": "linked_w",
+            "value": 50.0,
+            "fmt": "int"
+          },
+          {
+            "evidence_id": "E6",
+            "name": "linked_share_pct",
+            "value": 96.2,
+            "fmt": "pct1"
+          }
+        ],
+        "evidence_ids": [
+          "E4",
+          "E1",
+          "E5",
+          "E6"
+        ],
+        "memory_id": null,
+        "confidence": 1.0,
+        "explained_share": 1.06,
+        "entities": [
+          "carrier:NordExpress",
+          "region:EU",
+          "week:2026-W41"
+        ],
+        "fact_key": "driver:carrier_delivery_delay@2026-W41"
+      }
+    ],
+    "unverified": [],
+    "evidence": [
+      {
+        "evidence_id": "E1",
+        "source": "orders",
+        "description": "Weekly net revenue, gross order value and cancellations (EU, weeks 37-41)",
+        "query": {
+          "table": "orders",
+          "filters": [
+            {
+              "column": "iso_year",
+              "op": "=",
+              "value": 2026
+            },
+            {
+              "column": "iso_week",
+              "op": ">=",
+              "value": 37
+            },
+            {
+              "column": "iso_week",
+              "op": "<=",
+              "value": 41
+            },
+            {
+              "column": "region",
+              "op": "=",
+              "value": "EU"
+            }
+          ],
+          "select": [],
+          "group_by": [
+            "iso_week",
+            "status"
+          ],
+          "aggs": [
+            {
+              "fn": "sum",
+              "column": "order_value_eur",
+              "alias": "gross"
+            },
+            {
+              "fn": "count",
+              "column": "order_id",
+              "alias": "n"
+            }
+          ],
+          "order_by": [
+            [
+              "iso_week",
+              "asc"
+            ],
+            [
+              "status",
+              "asc"
+            ]
+          ],
+          "limit": 1000,
+          "derive": "weekly_revenue",
+          "params": {
+            "week": 41
+          }
+        },
+        "query_text": "csv:orders where iso_year=2026 and iso_week>=37 and iso_week<=41 and region='EU' group_by(iso_week,status) sum(order_value_eur) count(order_id) order_by(iso_week asc,status asc)",
+        "values": {
+          "net_w": 6990.27,
+          "net_prev": 9997.52,
+          "net_base_mean": 10196.51,
+          "net_wow_pct": -30.1,
+          "net_wow_abs_pct": 30.1,
+          "net_base_pct": -31.4,
+          "net_base_abs_pct": 31.4,
+          "net_delta_eur": -3007.25,
+          "net_change_abs_eur": 3007.25,
+          "gross_w": 10424.04,
+          "gross_prev": 10467.1,
+          "gross_wow_pct": -0.4,
+          "gross_wow_abs_pct": 0.4,
+          "gross_base_abs_pct": 0.3,
+          "cancelled_w": 3433.77,
+          "cancelled_prev": 469.58,
+          "orders_w": 149.0
+        },
+        "rows": [
+          {
+            "iso_week": 37,
+            "status": "cancelled",
+            "gross": 174.88,
+            "n": 4
+          },
+          {
+            "iso_week": 37,
+            "status": "delivered",
+            "gross": 10225.62,
+            "n": 145
+          },
+          {
+            "iso_week": 38,
+            "status": "cancelled",
+            "gross": 197.68,
+            "n": 4
+          },
+          {
+            "iso_week": 38,
+            "status": "delivered",
+            "gross": 10227.5,
+            "n": 143
+          },
+          {
+            "iso_week": 39,
+            "status": "cancelled",
+            "gross": 208.85,
+            "n": 4
+          },
+          {
+            "iso_week": 39,
+            "status": "delivered",
+            "gross": 10335.39,
+            "n": 146
+          },
+          {
+            "iso_week": 40,
+            "status": "cancelled",
+            "gross": 469.58,
+            "n": 7
+          },
+          {
+            "iso_week": 40,
+            "status": "delivered",
+            "gross": 9997.52,
+            "n": 145
+          },
+          {
+            "iso_week": 41,
+            "status": "cancelled",
+            "gross": 3433.77,
+            "n": 44
+          },
+          {
+            "iso_week": 41,
+            "status": "delivered",
+            "gross": 6334.87,
+            "n": 95
+          },
+          {
+            "iso_week": 41,
+            "status": "shipped",
+            "gross": 655.4,
+            "n": 10
+          }
+        ],
+        "row_refs": [],
+        "row_ref_total": 0,
+        "retrieved_at": "2026-10-22T17:46:47Z"
+      },
+      {
+        "evidence_id": "E2",
+        "source": "orders",
+        "description": "Net revenue change by category (week 41 vs prior week)",
+        "query": {
+          "table": "orders",
+          "filters": [
+            {
+              "column": "iso_year",
+              "op": "=",
+              "value": 2026
+            },
+            {
+              "column": "iso_week",
+              "op": ">=",
+              "value": 40
+            },
+            {
+              "column": "iso_week",
+              "op": "<=",
+              "value": 41
+            },
+            {
+              "column": "region",
+              "op": "=",
+              "value": "EU"
+            }
+          ],
+          "select": [],
+          "group_by": [
+            "iso_week",
+            "category",
+            "status"
+          ],
+          "aggs": [
+            {
+              "fn": "sum",
+              "column": "order_value_eur",
+              "alias": "gross"
+            }
+          ],
+          "order_by": [],
+          "limit": 5000,
+          "derive": "segment_delta",
+          "params": {
+            "week": 41,
+            "dim": "category",
+            "net_delta": -3007.25
+          }
+        },
+        "query_text": "csv:orders where iso_year=2026 and iso_week>=40 and iso_week<=41 and region='EU' group_by(iso_week,category,status) sum(order_value_eur) limit 5000",
+        "values": {
+          "net_abs_delta_accessories": 423.92,
+          "share_pct_accessories": 14.1,
+          "net_abs_delta_apparel": 40.84,
+          "share_pct_apparel": 0.0,
+          "net_abs_delta_electronics": 1766.67,
+          "share_pct_electronics": 58.7,
+          "net_abs_delta_home": 443.48,
+          "share_pct_home": 14.7,
+          "net_abs_delta_outdoor": 414.02,
+          "share_pct_outdoor": 13.8,
+          "top_seg_net_abs_delta_eur": 1766.67,
+          "top_seg_share_pct": 58.7
+        },
+        "rows": [
+          {
+            "iso_week": 40,
+            "category": "accessories",
+            "status": "delivered",
+            "gross": 1033.16
+          },
+          {
+            "iso_week": 40,
+            "category": "apparel",
+            "status": "cancelled",
+            "gross": 143.14
+          },
+          {
+            "iso_week": 40,
+            "category": "apparel",
+            "status": "delivered",
+            "gross": 1831.14
+          },
+          {
+            "iso_week": 40,
+            "category": "electronics",
+            "status": "cancelled",
+            "gross": 120.73
+          },
+          {
+            "iso_week": 40,
+            "category": "electronics",
+            "status": "delivered",
+            "gross": 3051.98
+          },
+          {
+            "iso_week": 40,
+            "category": "home",
+            "status": "cancelled",
+            "gross": 131.07
+          },
+          {
+            "iso_week": 40,
+            "category": "home",
+            "status": "delivered",
+            "gross": 1843.98
+          },
+          {
+            "iso_week": 40,
+            "category": "outdoor",
+            "status": "cancelled",
+            "gross": 74.64
+          },
+          {
+            "iso_week": 40,
+            "category": "outdoor",
+            "status": "delivered",
+            "gross": 2237.26
+          },
+          {
+            "iso_week": 41,
+            "category": "accessories",
+            "status": "cancelled",
+            "gross": 360.72
+          },
+          {
+            "iso_week": 41,
+            "category": "accessories",
+            "status": "delivered",
+            "gross": 609.24
+          },
+          {
+            "iso_week": 41,
+            "category": "apparel",
+            "status": "cancelled",
+            "gross": 809.56
+          },
+          {
+            "iso_week": 41,
+            "category": "apparel",
+            "status": "delivered",
+            "gross": 1871.98
+          },
+          {
+            "iso_week": 41,
+            "category": "electronics",
+            "status": "cancelled",
+            "gross": 1113.66
+          },
+          {
+            "iso_week": 41,
+            "category": "electronics",
+            "status": "delivered",
+            "gross": 1159.48
+          },
+          {
+            "iso_week": 41,
+            "category": "electronics",
+            "status": "shipped",
+            "gross": 125.83
+          },
+          {
+            "iso_week": 41,
+            "category": "home",
+            "status": "cancelled",
+            "gross": 585.93
+          },
+          {
+            "iso_week": 41,
+            "category": "home",
+            "status": "delivered",
+            "gross": 1057.59
+          },
+          {
+            "iso_week": 41,
+            "category": "home",
+            "status": "shipped",
+            "gross": 342.91
+          },
+          {
+            "iso_week": 41,
+            "category": "outdoor",
+            "status": "cancelled",
+            "gross": 563.9
+          },
+          {
+            "iso_week": 41,
+            "category": "outdoor",
+            "status": "delivered",
+            "gross": 1636.58
+          },
+          {
+            "iso_week": 41,
+            "category": "outdoor",
+            "status": "shipped",
+            "gross": 186.66
+          }
+        ],
+        "row_refs": [],
+        "row_ref_total": 0,
+        "retrieved_at": "2026-10-22T17:46:47Z"
+      },
+      {
+        "evidence_id": "E3",
+        "source": "orders",
+        "description": "Net revenue change by country (week 41 vs prior week)",
+        "query": {
+          "table": "orders",
+          "filters": [
+            {
+              "column": "iso_year",
+              "op": "=",
+              "value": 2026
+            },
+            {
+              "column": "iso_week",
+              "op": ">=",
+              "value": 40
+            },
+            {
+              "column": "iso_week",
+              "op": "<=",
+              "value": 41
+            },
+            {
+              "column": "region",
+              "op": "=",
+              "value": "EU"
+            }
+          ],
+          "select": [],
+          "group_by": [
+            "iso_week",
+            "country",
+            "status"
+          ],
+          "aggs": [
+            {
+              "fn": "sum",
+              "column": "order_value_eur",
+              "alias": "gross"
+            }
+          ],
+          "order_by": [],
+          "limit": 5000,
+          "derive": "segment_delta",
+          "params": {
+            "week": 41,
+            "dim": "country",
+            "net_delta": -3007.25
+          }
+        },
+        "query_text": "csv:orders where iso_year=2026 and iso_week>=40 and iso_week<=41 and region='EU' group_by(iso_week,country,status) sum(order_value_eur) limit 5000",
+        "values": {
+          "net_abs_delta_DE": 961.68,
+          "share_pct_DE": 32.0,
+          "net_abs_delta_ES": 575.64,
+          "share_pct_ES": 19.1,
+          "net_abs_delta_FR": 536.1,
+          "share_pct_FR": 17.8,
+          "net_abs_delta_IT": 540.85,
+          "share_pct_IT": 18.0,
+          "net_abs_delta_NL": 392.98,
+          "share_pct_NL": 13.1,
+          "top_seg_net_abs_delta_eur": 961.68,
+          "top_seg_share_pct": 32.0
+        },
+        "rows": [
+          {
+            "iso_week": 40,
+            "country": "DE",
+            "status": "cancelled",
+            "gross": 205.71
+          },
+          {
+            "iso_week": 40,
+            "country": "DE",
+            "status": "delivered",
+            "gross": 3514.21
+          },
+          {
+            "iso_week": 40,
+            "country": "ES",
+            "status": "cancelled",
+            "gross": 154.12
+          },
+          {
+            "iso_week": 40,
+            "country": "ES",
+            "status": "delivered",
+            "gross": 1484.93
+          },
+          {
+            "iso_week": 40,
+            "country": "FR",
+            "status": "delivered",
+            "gross": 1967.79
+          },
+          {
+            "iso_week": 40,
+            "country": "IT",
+            "status": "cancelled",
+            "gross": 109.75
+          },
+          {
+            "iso_week": 40,
+            "country": "IT",
+            "status": "delivered",
+            "gross": 1245.74
+          },
+          {
+            "iso_week": 40,
+            "country": "NL",
+            "status": "delivered",
+            "gross": 1784.85
+          },
+          {
+            "iso_week": 41,
+            "country": "DE",
+            "status": "cancelled",
+            "gross": 764.2
+          },
+          {
+            "iso_week": 41,
+            "country": "DE",
+            "status": "delivered",
+            "gross": 1981.01
+          },
+          {
+            "iso_week": 41,
+            "country": "DE",
+            "status": "shipped",
+            "gross": 571.52
+          },
+          {
+            "iso_week": 41,
+            "country": "ES",
+            "status": "cancelled",
+            "gross": 523.0
+          },
+          {
+            "iso_week": 41,
+            "country": "ES",
+            "status": "delivered",
+            "gross": 909.29
+          },
+          {
+            "iso_week": 41,
+            "country": "FR",
+            "status": "cancelled",
+            "gross": 778.85
+          },
+          {
+            "iso_week": 41,
+            "country": "FR",
+            "status": "delivered",
+            "gross": 1431.69
+          },
+          {
+            "iso_week": 41,
+            "country": "IT",
+            "status": "cancelled",
+            "gross": 86.0
+          },
+          {
+            "iso_week": 41,
+            "country": "IT",
+            "status": "delivered",
+            "gross": 621.01
+          },
+          {
+            "iso_week": 41,
+            "country": "IT",
+            "status": "shipped",
+            "gross": 83.88
+          },
+          {
+            "iso_week": 41,
+            "country": "NL",
+            "status": "cancelled",
+            "gross": 1281.72
+          },
+          {
+            "iso_week": 41,
+            "country": "NL",
+            "status": "delivered",
+            "gross": 1391.87
+          }
+        ],
+        "row_refs": [],
+        "row_ref_total": 0,
+        "retrieved_at": "2026-10-22T17:46:47Z"
+      },
+      {
+        "evidence_id": "E4",
+        "source": "orders",
+        "description": "Cancelled orders by carrier and reason (week 41 vs prior week)",
+        "query": {
+          "table": "orders",
+          "filters": [
+            {
+              "column": "iso_year",
+              "op": "=",
+              "value": 2026
+            },
+            {
+              "column": "iso_week",
+              "op": ">=",
+              "value": 40
+            },
+            {
+              "column": "iso_week",
+              "op": "<=",
+              "value": 41
+            },
+            {
+              "column": "region",
+              "op": "=",
+              "value": "EU"
+            },
+            {
+              "column": "status",
+              "op": "=",
+              "value": "cancelled"
+            }
+          ],
+          "select": [
+            "order_id",
+            "iso_week",
+            "carrier",
+            "cancel_reason",
+            "order_value_eur"
+          ],
+          "group_by": [],
+          "aggs": [],
+          "order_by": [
+            [
+              "order_value_eur",
+              "desc"
+            ]
+          ],
+          "limit": 5000,
+          "derive": "cancel_segments",
+          "params": {
+            "week": 41,
+            "net_delta": -3007.25
+          }
+        },
+        "query_text": "csv:orders where iso_year=2026 and iso_week>=40 and iso_week<=41 and region='EU' and status='cancelled' select(order_id,iso_week,carrier,cancel_reason,order_value_eur) order_by(order_value_eur desc) limit 5000",
+        "values": {
+          "cancel_total_w_eur": 3433.77,
+          "cand_cancel_w_eur": 3346.85,
+          "cand_cancel_prev_eur": 159.06,
+          "cand_incr_abs_eur": 3187.79,
+          "cand_orders_w": 42.0,
+          "cand_share_pct": 106.0
+        },
+        "rows": [
+          {
+            "order_id": "O-001697",
+            "iso_week": 41,
+            "carrier": "NordExpress",
+            "cancel_reason": "delivery_delay",
+            "order_value_eur": 393.81
+          },
+          {
+            "order_id": "O-001692",
+            "iso_week": 41,
+            "carrier": "NordExpress",
+            "cancel_reason": "delivery_delay",
+            "order_value_eur": 228.84
+          },
+          {
+            "order_id": "O-001607",
+            "iso_week": 41,
+            "carrier": "NordExpress",
+            "cancel_reason": "delivery_delay",
+            "order_value_eur": 228.1
+          },
+          {
+            "order_id": "O-001643",
+            "iso_week": 41,
+            "carrier": "NordExpress",
+            "cancel_reason": "delivery_delay",
+            "order_value_eur": 137.68
+          },
+          {
+            "order_id": "O-001665",
+            "iso_week": 41,
+            "carrier": "NordExpress",
+            "cancel_reason": "delivery_delay",
+            "order_value_eur": 132.02
+          },
+          {
+            "order_id": "O-001709",
+            "iso_week": 41,
+            "carrier": "NordExpress",
+            "cancel_reason": "delivery_delay",
+            "order_value_eur": 131.82
+          },
+          {
+            "order_id": "O-001521",
+            "iso_week": 41,
+            "carrier": "NordExpress",
+            "cancel_reason": "delivery_delay",
+            "order_value_eur": 127.72
+          },
+          {
+            "order_id": "O-001594",
+            "iso_week": 41,
+            "carrier": "NordExpress",
+            "cancel_reason": "delivery_delay",
+            "order_value_eur": 123.88
+          },
+          {
+            "order_id": "O-001688",
+            "iso_week": 41,
+            "carrier": "NordExpress",
+            "cancel_reason": "delivery_delay",
+            "order_value_eur": 121.14
+          },
+          {
+            "order_id": "O-001613",
+            "iso_week": 41,
+            "carrier": "NordExpress",
+            "cancel_reason": "delivery_delay",
+            "order_value_eur": 121.05
+          },
+          {
+            "order_id": "O-001367",
+            "iso_week": 40,
+            "carrier": "NordExpress",
+            "cancel_reason": "payment_failed",
+            "order_value_eur": 120.73
+          },
+          {
+            "order_id": "O-001575",
+            "iso_week": 41,
+            "carrier": "NordExpress",
+            "cancel_reason": "delivery_delay",
+            "order_value_eur": 108.13
+          },
+          {
+            "order_id": "O-001533",
+            "iso_week": 41,
+            "carrier": "NordExpress",
+            "cancel_reason": "delivery_delay",
+            "order_value_eur": 89.28
+          },
+          {
+            "order_id": "O-001458",
+            "iso_week": 40,
+            "carrier": "NordExpress",
+            "cancel_reason": "delivery_delay",
+            "order_value_eur": 88.8
+          },
+          {
+            "order_id": "O-001508",
+            "iso_week": 41,
+            "carrier": "NordExpress",
+            "cancel_reason": "delivery_delay",
+            "order_value_eur": 84.22
+          },
+          {
+            "order_id": "O-001627",
+            "iso_week": 41,
+            "carrier": "NordExpress",
+            "cancel_reason": "delivery_delay",
+            "order_value_eur": 83.86
+          },
+          {
+            "order_id": "O-001559",
+            "iso_week": 41,
+            "carrier": "NordExpress",
+            "cancel_reason": "delivery_delay",
+            "order_value_eur": 79.32
+          },
+          {
+            "order_id": "O-001578",
+            "iso_week": 41,
+            "carrier": "NordExpress",
+            "cancel_reason": "delivery_delay",
+            "order_value_eur": 77.78
+          },
+          {
+            "order_id": "O-001652",
+            "iso_week": 41,
+            "carrier": "NordExpress",
+            "cancel_reason": "delivery_delay",
+            "order_value_eur": 77.56
+          },
+          {
+            "order_id": "O-001719",
+            "iso_week": 41,
+            "carrier": "NordExpress",
+            "cancel_reason": "delivery_delay",
+            "order_value_eur": 76.24
+          },
+          {
+            "order_id": "O-001285",
+            "iso_week": 40,
+            "carrier": "RheinFracht",
+            "cancel_reason": "customer_request",
+            "order_value_eur": 74.64
+          },
+          {
+            "order_id": "O-001498",
+            "iso_week": 40,
+            "carrier": "AlpenPost",
+            "cancel_reason": "payment_failed",
+            "order_value_eur": 72.88
+          },
+          {
+            "order_id": "O-001577",
+            "iso_week": 41,
+            "carrier": "NordExpress",
+            "cancel_reason": "delivery_delay",
+            "order_value_eur": 55.72
+          },
+          {
+            "order_id": "O-001630",
+            "iso_week": 41,
+            "carrier": "NordExpress",
+            "cancel_reason": "delivery_delay",
+            "order_value_eur": 52.56
+          },
+          {
+            "order_id": "O-001556",
+            "iso_week": 41,
+            "carrier": "NordExpress",
+            "cancel_reason": "delivery_delay",
+            "order_value_eur": 48.03
+          },
+          {
+            "order_id": "O-001502",
+            "iso_week": 41,
+            "carrier": "NordExpress",
+            "cancel_reason": "delivery_delay",
+            "order_value_eur": 47.2
+          },
+          {
+            "order_id": "O-001741",
+            "iso_week": 41,
+            "carrier": "NordExpress",
+            "cancel_reason": "delivery_delay",
+            "order_value_eur": 45.65
+          },
+          {
+            "order_id": "O-001599",
+            "iso_week": 41,
+            "carrier": "NordExpress",
+            "cancel_reason": "delivery_delay",
+            "order_value_eur": 45.04
+          },
+          {
+            "order_id": "O-001727",
+            "iso_week": 41,
+            "carrier": "NordExpress",
+            "cancel_reason": "delivery_delay",
+            "order_value_eur": 43.83
+          },
+          {
+            "order_id": "O-001544",
+            "iso_week": 41,
+            "carrier": "RheinFracht",
+            "cancel_reason": "delivery_delay",
+            "order_value_eur": 43.76
+          },
+          {
+            "order_id": "O-001744",
+            "iso_week": 41,
+            "carrier": "AlpenPost",
+            "cancel_reason": "customer_request",
+            "order_value_eur": 43.16
+          },
+          {
+            "order_id": "O-001366",
+            "iso_week": 40,
+            "carrier": "RheinFracht",
+            "cancel_reason": "customer_request",
+            "order_value_eur": 42.27
+          },
+          {
+            "order_id": "O-001604",
+            "iso_week": 41,
+            "carrier": "NordExpress",
+            "cancel_reason": "delivery_delay",
+            "order_value_eur": 42.03
+          },
+          {
+            "order_id": "O-001580",
+            "iso_week": 41,
+            "carrier": "NordExpress",
+            "cancel_reason": "delivery_delay",
+            "order_value_eur": 41.9
+          },
+          {
+            "order_id": "O-001672",
+            "iso_week": 41,
+            "carrier": "NordExpress",
+            "cancel_reason": "delivery_delay",
+            "order_value_eur": 41.41
+          },
+          {
+            "order_id": "O-001570",
+            "iso_week": 41,
+            "carrier": "NordExpress",
+            "cancel_reason": "delivery_delay",
+            "order_value_eur": 40.96
+          },
+          {
+            "order_id": "O-001702",
+            "iso_week": 41,
+            "carrier": "NordExpress",
+            "cancel_reason": "delivery_delay",
+            "order_value_eur": 40.65
+          },
+          {
+            "order_id": "O-001705",
+            "iso_week": 41,
+            "carrier": "NordExpress",
+            "cancel_reason": "delivery_delay",
+            "order_value_eur": 39.63
+          },
+          {
+            "order_id": "O-001555",
+            "iso_week": 41,
+            "carrier": "NordExpress",
+            "cancel_reason": "delivery_delay",
+            "order_value_eur": 37.28
+          },
+          {
+            "order_id": "O-001419",
+            "iso_week": 40,
+            "carrier": "NordExpress",
+            "cancel_reason": "delivery_delay",
+            "order_value_eur": 36.87
+          },
+          {
+            "order_id": "O-001673",
+            "iso_week": 41,
+            "carrier": "NordExpress",
+            "cancel_reason": "delivery_delay",
+            "order_value_eur": 36.25
+          },
+          {
+            "order_id": "O-001641",
+            "iso_week": 41,
+            "carrier": "NordExpress",
+            "cancel_reason": "delivery_delay",
+            "order_value_eur": 35.84
+          },
+          {
+            "order_id": "O-001522",
+            "iso_week": 41,
+            "carrier": "NordExpress",
+            "cancel_reason": "delivery_delay",
+            "order_value_eur": 35.28
+          },
+          {
+            "order_id": "O-001614",
+            "iso_week": 41,
+            "carrier": "NordExpress",
+            "cancel_reason": "delivery_delay",
+            "order_value_eur": 34.85
+          },
+          {
+            "order_id": "O-001742",
+            "iso_week": 41,
+            "carrier": "NordExpress",
+            "cancel_reason": "delivery_delay",
+            "order_value_eur": 34.37
+          },
+          {
+            "order_id": "O-001473",
+            "iso_week": 40,
+            "carrier": "NordExpress",
+            "cancel_reason": "delivery_delay",
+            "order_value_eur": 33.39
+          },
+          {
+            "order_id": "O-001684",
+            "iso_week": 41,
+            "carrier": "NordExpress",
+            "cancel_reason": "delivery_delay",
+            "order_value_eur": 27.71
+          },
+          {
+            "order_id": "O-001723",
+            "iso_week": 41,
+            "carrier": "NordExpress",
+            "cancel_reason": "delivery_delay",
+            "order_value_eur": 25.94
+          },
+          {
+            "order_id": "O-001582",
+            "iso_week": 41,
+            "carrier": "NordExpress",
+            "cancel_reason": "delivery_delay",
+            "order_value_eur": 25.58
+          },
+          {
+            "order_id": "O-001670",
+            "iso_week": 41,
+            "carrier": "NordExpress",
+            "cancel_reason": "delivery_delay",
+            "order_value_eur": 23.42
+          }
+        ],
+        "row_refs": [
+          "O-001502",
+          "O-001508",
+          "O-001521",
+          "O-001522",
+          "O-001533",
+          "O-001555",
+          "O-001556",
+          "O-001559",
+          "O-001570",
+          "O-001575",
+          "O-001577",
+          "O-001578",
+          "O-001580",
+          "O-001582",
+          "O-001594",
+          "O-001599",
+          "O-001604",
+          "O-001607",
+          "O-001613",
+          "O-001614"
+        ],
+        "row_ref_total": 42,
+        "retrieved_at": "2026-10-22T17:46:47Z"
+      },
+      {
+        "evidence_id": "E5",
+        "source": "shipments",
+        "description": "Shipment delays by carrier (weeks 37-42) joined to cancelled orders",
+        "query": {
+          "table": "shipments",
+          "filters": [
+            {
+              "column": "ship_iso_year",
+              "op": "=",
+              "value": 2026
+            },
+            {
+              "column": "ship_iso_week",
+              "op": ">=",
+              "value": 37
+            },
+            {
+              "column": "ship_iso_week",
+              "op": "<=",
+              "value": 42
+            },
+            {
+              "column": "region",
+              "op": "=",
+              "value": "EU"
+            }
+          ],
+          "select": [
+            "shipment_id",
+            "order_id",
+            "carrier",
+            "ship_iso_week",
+            "delay_days"
+          ],
+          "group_by": [],
+          "aggs": [],
+          "order_by": [],
+          "limit": 5000,
+          "derive": "shipments",
+          "params": {
+            "carrier": "NordExpress",
+            "week": 41,
+            "order_ids": [
+              "O-001502",
+              "O-001508",
+              "O-001521",
+              "O-001522",
+              "O-001533",
+              "O-001555",
+              "O-001556",
+              "O-001559",
+              "O-001570",
+              "O-001575",
+              "O-001577",
+              "O-001578",
+              "O-001580",
+              "O-001582",
+              "O-001594",
+              "O-001599",
+              "O-001604",
+              "O-001607",
+              "O-001613",
+              "O-001614",
+              "O-001627",
+              "O-001630",
+              "O-001641",
+              "O-001643",
+              "O-001652",
+              "O-001665",
+              "O-001670",
+              "O-001672",
+              "O-001673",
+              "O-001684",
+              "O-001688",
+              "O-001692",
+              "O-001697",
+              "O-001702",
+              "O-001705",
+              "O-001709",
+              "O-001719",
+              "O-001723",
+              "O-001727",
+              "O-001741",
+              "O-001742",
+              "O-001748"
+            ]
+          }
+        },
+        "query_text": "csv:shipments where ship_iso_year=2026 and ship_iso_week>=37 and ship_iso_week<=42 and region='EU' select(shipment_id,order_id,carrier,ship_iso_week,delay_days) limit 5000",
+        "values": {
+          "ship_total_w": 72.0,
+          "ship_late_w": 66.0,
+          "ship_late_share_w_pct": 91.7,
+          "ship_avg_delay_w": 5.3,
+          "ship_late_share_base_pct": 11.9,
+          "ship_avg_delay_base": 1.3,
+          "ship_late_share_other_pct": 0.0,
+          "join_total_n": 42.0,
+          "join_late_n": 37.0
+        },
+        "rows": [
+          {
+            "shipment_id": "S-000474",
+            "order_id": "O-000474",
+            "carrier": "AlpenPost",
+            "ship_iso_week": 37,
+            "delay_days": 0
+          },
+          {
+            "shipment_id": "S-000484",
+            "order_id": "O-000484",
+            "carrier": "NordExpress",
+            "ship_iso_week": 37,
+            "delay_days": 0
+          },
+          {
+            "shipment_id": "S-000489",
+            "order_id": "O-000489",
+            "carrier": "NordExpress",
+            "ship_iso_week": 37,
+            "delay_days": 0
+          },
+          {
+            "shipment_id": "S-000490",
+            "order_id": "O-000490",
+            "carrier": "RheinFracht",
+            "ship_iso_week": 37,
+            "delay_days": 1
+          },
+          {
+            "shipment_id": "S-000499",
+            "order_id": "O-000499",
+            "carrier": "NordExpress",
+            "ship_iso_week": 37,
+            "delay_days": 0
+          },
+          {
+            "shipment_id": "S-000504",
+            "order_id": "O-000504",
+            "carrier": "RheinFracht",
+            "ship_iso_week": 37,
+            "delay_days": 1
+          },
+          {
+            "shipment_id": "S-000506",
+            "order_id": "O-000506",
+            "carrier": "NordExpress",
+            "ship_iso_week": 37,
+            "delay_days": 0
+          },
+          {
+            "shipment_id": "S-000507",
+            "order_id": "O-000507",
+            "carrier": "AlpenPost",
+            "ship_iso_week": 37,
+            "delay_days": 0
+          },
+          {
+            "shipment_id": "S-000508",
+            "order_id": "O-000508",
+            "carrier": "AlpenPost",
+            "ship_iso_week": 37,
+            "delay_days": 0
+          },
+          {
+            "shipment_id": "S-000510",
+            "order_id": "O-000510",
+            "carrier": "RheinFracht",
+            "ship_iso_week": 37,
+            "delay_days": 0
+          },
+          {
+            "shipment_id": "S-000511",
+            "order_id": "O-000511",
+            "carrier": "AlpenPost",
+            "ship_iso_week": 37,
+            "delay_days": 0
+          },
+          {
+            "shipment_id": "S-000512",
+            "order_id": "O-000512",
+            "carrier": "RheinFracht",
+            "ship_iso_week": 37,
+            "delay_days": 1
+          },
+          {
+            "shipment_id": "S-000514",
+            "order_id": "O-000514",
+            "carrier": "AlpenPost",
+            "ship_iso_week": 37,
+            "delay_days": 1
+          },
+          {
+            "shipment_id": "S-000515",
+            "order_id": "O-000515",
+            "carrier": "RheinFracht",
+            "ship_iso_week": 37,
+            "delay_days": 0
+          },
+          {
+            "shipment_id": "S-000519",
+            "order_id": "O-000519",
+            "carrier": "NordExpress",
+            "ship_iso_week": 37,
+            "delay_days": 1
+          },
+          {
+            "shipment_id": "S-000520",
+            "order_id": "O-000520",
+            "carrier": "RheinFracht",
+            "ship_iso_week": 37,
+            "delay_days": 0
+          },
+          {
+            "shipment_id": "S-000521",
+            "order_id": "O-000521",
+            "carrier": "RheinFracht",
+            "ship_iso_week": 37,
+            "delay_days": 1
+          },
+          {
+            "shipment_id": "S-000522",
+            "order_id": "O-000522",
+            "carrier": "NordExpress",
+            "ship_iso_week": 37,
+            "delay_days": 0
+          },
+          {
+            "shipment_id": "S-000523",
+            "order_id": "O-000523",
+            "carrier": "AlpenPost",
+            "ship_iso_week": 37,
+            "delay_days": 1
+          },
+          {
+            "shipment_id": "S-000524",
+            "order_id": "O-000524",
+            "carrier": "NordExpress",
+            "ship_iso_week": 37,
+            "delay_days": 1
+          },
+          {
+            "shipment_id": "S-000526",
+            "order_id": "O-000526",
+            "carrier": "NordExpress",
+            "ship_iso_week": 37,
+            "delay_days": 0
+          },
+          {
+            "shipment_id": "S-000527",
+            "order_id": "O-000527",
+            "carrier": "NordExpress",
+            "ship_iso_week": 37,
+            "delay_days": 0
+          },
+          {
+            "shipment_id": "S-000528",
+            "order_id": "O-000528",
+            "carrier": "NordExpress",
+            "ship_iso_week": 37,
+            "delay_days": 0
+          },
+          {
+            "shipment_id": "S-000531",
+            "order_id": "O-000531",
+            "carrier": "RheinFracht",
+            "ship_iso_week": 37,
+            "delay_days": 1
+          },
+          {
+            "shipment_id": "S-000533",
+            "order_id": "O-000533",
+            "carrier": "AlpenPost",
+            "ship_iso_week": 37,
+            "delay_days": 0
+          },
+          {
+            "shipment_id": "S-000534",
+            "order_id": "O-000534",
+            "carrier": "AlpenPost",
+            "ship_iso_week": 37,
+            "delay_days": 1
+          },
+          {
+            "shipment_id": "S-000535",
+            "order_id": "O-000535",
+            "carrier": "RheinFracht",
+            "ship_iso_week": 37,
+            "delay_days": 1
+          },
+          {
+            "shipment_id": "S-000536",
+            "order_id": "O-000536",
+            "carrier": "NordExpress",
+            "ship_iso_week": 37,
+            "delay_days": 0
+          },
+          {
+            "shipment_id": "S-000538",
+            "order_id": "O-000538",
+            "carrier": "RheinFracht",
+            "ship_iso_week": 37,
+            "delay_days": 0
+          },
+          {
+            "shipment_id": "S-000539",
+            "order_id": "O-000539",
+            "carrier": "NordExpress",
+            "ship_iso_week": 37,
+            "delay_days": 1
+          },
+          {
+            "shipment_id": "S-000541",
+            "order_id": "O-000541",
+            "carrier": "NordExpress",
+            "ship_iso_week": 37,
+            "delay_days": 0
+          },
+          {
+            "shipment_id": "S-000543",
+            "order_id": "O-000543",
+            "carrier": "NordExpress",
+            "ship_iso_week": 37,
+            "delay_days": 0
+          },
+          {
+            "shipment_id": "S-000544",
+            "order_id": "O-000544",
+            "carrier": "NordExpress",
+            "ship_iso_week": 37,
+            "delay_days": 0
+          },
+          {
+            "shipment_id": "S-000545",
+            "order_id": "O-000545",
+            "carrier": "RheinFracht",
+            "ship_iso_week": 37,
+            "delay_days": 0
+          },
+          {
+            "shipment_id": "S-000547",
+            "order_id": "O-000547",
+            "carrier": "NordExpress",
+            "ship_iso_week": 37,
+            "delay_days": 1
+          },
+          {
+            "shipment_id": "S-000549",
+            "order_id": "O-000549",
+            "carrier": "NordExpress",
+            "ship_iso_week": 37,
+            "delay_days": 1
+          },
+          {
+            "shipment_id": "S-000552",
+            "order_id": "O-000552",
+            "carrier": "NordExpress",
+            "ship_iso_week": 37,
+            "delay_days": 1
+          },
+          {
+            "shipment_id": "S-000554",
+            "order_id": "O-000554",
+            "carrier": "NordExpress",
+            "ship_iso_week": 37,
+            "delay_days": 1
+          },
+          {
+            "shipment_id": "S-000557",
+            "order_id": "O-000557",
+            "carrier": "NordExpress",
+            "ship_iso_week": 37,
+            "delay_days": 0
+          },
+          {
+            "shipment_id": "S-000560",
+            "order_id": "O-000560",
+            "carrier": "NordExpress",
+            "ship_iso_week": 37,
+            "delay_days": 1
+          },
+          {
+            "shipment_id": "S-000561",
+            "order_id": "O-000561",
+            "carrier": "NordExpress",
+            "ship_iso_week": 37,
+            "delay_days": 1
+          },
+          {
+            "shipment_id": "S-000562",
+            "order_id": "O-000562",
+            "carrier": "NordExpress",
+            "ship_iso_week": 37,
+            "delay_days": 1
+          },
+          {
+            "shipment_id": "S-000564",
+            "order_id": "O-000564",
+            "carrier": "NordExpress",
+            "ship_iso_week": 37,
+            "delay_days": 1
+          },
+          {
+            "shipment_id": "S-000566",
+            "order_id": "O-000566",
+            "carrier": "AlpenPost",
+            "ship_iso_week": 37,
+            "delay_days": 1
+          },
+          {
+            "shipment_id": "S-000568",
+            "order_id": "O-000568",
+            "carrier": "NordExpress",
+            "ship_iso_week": 37,
+            "delay_days": 1
+          },
+          {
+            "shipment_id": "S-000569",
+            "order_id": "O-000569",
+            "carrier": "AlpenPost",
+            "ship_iso_week": 37,
+            "delay_days": 1
+          },
+          {
+            "shipment_id": "S-000571",
+            "order_id": "O-000571",
+            "carrier": "NordExpress",
+            "ship_iso_week": 37,
+            "delay_days": 0
+          },
+          {
+            "shipment_id": "S-000574",
+            "order_id": "O-000574",
+            "carrier": "NordExpress",
+            "ship_iso_week": 37,
+            "delay_days": 0
+          },
+          {
+            "shipment_id": "S-000578",
+            "order_id": "O-000578",
+            "carrier": "RheinFracht",
+            "ship_iso_week": 37,
+            "delay_days": 0
+          },
+          {
+            "shipment_id": "S-000580",
+            "order_id": "O-000580",
+            "carrier": "RheinFracht",
+            "ship_iso_week": 37,
+            "delay_days": 0
+          }
+        ],
+        "row_refs": [
+          "S-001484",
+          "S-001486",
+          "S-001488",
+          "S-001489",
+          "S-001502",
+          "S-001508",
+          "S-001510",
+          "S-001521",
+          "S-001522",
+          "S-001529",
+          "S-001533",
+          "S-001536",
+          "S-001554",
+          "S-001555",
+          "S-001556",
+          "S-001559",
+          "S-001569",
+          "S-001570",
+          "S-001575",
+          "S-001577"
+        ],
+        "row_ref_total": 66,
+        "retrieved_at": "2026-10-22T17:46:47Z"
+      },
+      {
+        "evidence_id": "E6",
+        "source": "tickets",
+        "description": "Support tickets (weeks 37-41) joined to NordExpress orders",
+        "query": {
+          "table": "tickets",
+          "filters": [
+            {
+              "column": "iso_year",
+              "op": "=",
+              "value": 2026
+            },
+            {
+              "column": "iso_week",
+              "op": ">=",
+              "value": 37
+            },
+            {
+              "column": "iso_week",
+              "op": "<=",
+              "value": 41
+            },
+            {
+              "column": "region",
+              "op": "=",
+              "value": "EU"
+            }
+          ],
+          "select": [
+            "ticket_id",
+            "iso_week",
+            "category",
+            "order_id"
+          ],
+          "group_by": [],
+          "aggs": [],
+          "order_by": [],
+          "limit": 5000,
+          "derive": "tickets",
+          "params": {
+            "week": 41,
+            "order_ids": [
+              "O-001251",
+              "O-001255",
+              "O-001261",
+              "O-001263",
+              "O-001264",
+              "O-001272",
+              "O-001273",
+              "O-001274",
+              "O-001275",
+              "O-001286",
+              "O-001306",
+              "O-001307",
+              "O-001312",
+              "O-001316",
+              "O-001318",
+              "O-001322",
+              "O-001329",
+              "O-001331",
+              "O-001332",
+              "O-001334",
+              "O-001335",
+              "O-001340",
+              "O-001344",
+              "O-001350",
+              "O-001353",
+              "O-001355",
+              "O-001356",
+              "O-001367",
+              "O-001371",
+              "O-001384",
+              "O-001387",
+              "O-001388",
+              "O-001391",
+              "O-001394",
+              "O-001401",
+              "O-001405",
+              "O-001407",
+              "O-001411",
+              "O-001412",
+              "O-001413",
+              "O-001417",
+              "O-001419",
+              "O-001429",
+              "O-001430",
+              "O-001433",
+              "O-001443",
+              "O-001444",
+              "O-001456",
+              "O-001458",
+              "O-001465",
+              "O-001472",
+              "O-001473",
+              "O-001474",
+              "O-001484",
+              "O-001486",
+              "O-001488",
+              "O-001489",
+              "O-001490",
+              "O-001502",
+              "O-001508",
+              "O-001510",
+              "O-001521",
+              "O-001522",
+              "O-001529",
+              "O-001533",
+              "O-001536",
+              "O-001554",
+              "O-001555",
+              "O-001556",
+              "O-001559",
+              "O-001569",
+              "O-001570",
+              "O-001575",
+              "O-001577",
+              "O-001578",
+              "O-001580",
+              "O-001581",
+              "O-001582",
+              "O-001583",
+              "O-001594",
+              "O-001599",
+              "O-001603",
+              "O-001604",
+              "O-001606",
+              "O-001607",
+              "O-001609",
+              "O-001613",
+              "O-001614",
+              "O-001616",
+              "O-001627",
+              "O-001628",
+              "O-001630",
+              "O-001631",
+              "O-001632",
+              "O-001635",
+              "O-001639",
+              "O-001641",
+              "O-001643",
+              "O-001645",
+              "O-001648",
+              "O-001652",
+              "O-001655",
+              "O-001658",
+              "O-001660",
+              "O-001665",
+              "O-001666",
+              "O-001670",
+              "O-001672",
+              "O-001673",
+              "O-001677",
+              "O-001681",
+              "O-001684",
+              "O-001688",
+              "O-001692",
+              "O-001697",
+              "O-001702",
+              "O-001705",
+              "O-001709",
+              "O-001711",
+              "O-001714",
+              "O-001719",
+              "O-001720",
+              "O-001723",
+              "O-001726",
+              "O-001727",
+              "O-001733",
+              "O-001741",
+              "O-001742",
+              "O-001748"
+            ]
+          }
+        },
+        "query_text": "csv:tickets where iso_year=2026 and iso_week>=37 and iso_week<=41 and region='EU' select(ticket_id,iso_week,category,order_id) limit 5000",
+        "values": {
+          "tickets_w": 52.0,
+          "tickets_base_mean": 14.0,
+          "tickets_change_abs_pct": 285.2,
+          "linked_w": 50.0,
+          "linked_share_pct": 96.2,
+          "tickets_up": 1.0
+        },
+        "rows": [
+          {
+            "ticket_id": "T-000052",
+            "iso_week": 37,
+            "category": "refund_request",
+            "order_id": "O-000519"
+          },
+          {
+            "ticket_id": "T-000055",
+            "iso_week": 37,
+            "category": "refund_request",
+            "order_id": null
+          },
+          {
+            "ticket_id": "T-000057",
+            "iso_week": 37,
+            "category": "refund_request",
+            "order_id": "O-000560"
+          },
+          {
+            "ticket_id": "T-000058",
+            "iso_week": 37,
+            "category": "where_is_my_order",
+            "order_id": "O-000545"
+          },
+          {
+            "ticket_id": "T-000059",
+            "iso_week": 37,
+            "category": "where_is_my_order",
+            "order_id": "O-000536"
+          },
+          {
+            "ticket_id": "T-000060",
+            "iso_week": 37,
+            "category": "delivery_delay",
+            "order_id": "O-000641"
+          },
+          {
+            "ticket_id": "T-000061",
+            "iso_week": 37,
+            "category": "delivery_delay",
+            "order_id": "O-000601"
+          },
+          {
+            "ticket_id": "T-000063",
+            "iso_week": 37,
+            "category": "where_is_my_order",
+            "order_id": "O-000711"
+          },
+          {
+            "ticket_id": "T-000064",
+            "iso_week": 37,
+            "category": "delivery_delay",
+            "order_id": "O-000687"
+          },
+          {
+            "ticket_id": "T-000065",
+            "iso_week": 37,
+            "category": "refund_request",
+            "order_id": "O-000651"
+          },
+          {
+            "ticket_id": "T-000070",
+            "iso_week": 37,
+            "category": "delivery_delay",
+            "order_id": "O-000601"
+          },
+          {
+            "ticket_id": "T-000071",
+            "iso_week": 37,
+            "category": "refund_request",
+            "order_id": "O-000728"
+          },
+          {
+            "ticket_id": "T-000072",
+            "iso_week": 37,
+            "category": "delivery_delay",
+            "order_id": "O-000528"
+          },
+          {
+            "ticket_id": "T-000073",
+            "iso_week": 37,
+            "category": "where_is_my_order",
+            "order_id": "O-000512"
+          },
+          {
+            "ticket_id": "T-000075",
+            "iso_week": 37,
+            "category": "refund_request",
+            "order_id": "O-000704"
+          },
+          {
+            "ticket_id": "T-000076",
+            "iso_week": 37,
+            "category": "delivery_delay",
+            "order_id": "O-000663"
+          },
+          {
+            "ticket_id": "T-000079",
+            "iso_week": 38,
+            "category": "product_question",
+            "order_id": "O-000802"
+          },
+          {
+            "ticket_id": "T-000080",
+            "iso_week": 38,
+            "category": "refund_request",
+            "order_id": null
+          },
+          {
+            "ticket_id": "T-000082",
+            "iso_week": 38,
+            "category": "delivery_delay",
+            "order_id": "O-000755"
+          },
+          {
+            "ticket_id": "T-000084",
+            "iso_week": 38,
+            "category": "product_question",
+            "order_id": null
+          },
+          {
+            "ticket_id": "T-000085",
+            "iso_week": 38,
+            "category": "where_is_my_order",
+            "order_id": "O-000794"
+          },
+          {
+            "ticket_id": "T-000087",
+            "iso_week": 38,
+            "category": "where_is_my_order",
+            "order_id": "O-000919"
+          },
+          {
+            "ticket_id": "T-000088",
+            "iso_week": 38,
+            "category": "delivery_delay",
+            "order_id": "O-000939"
+          },
+          {
+            "ticket_id": "T-000089",
+            "iso_week": 38,
+            "category": "delivery_delay",
+            "order_id": "O-000944"
+          },
+          {
+            "ticket_id": "T-000092",
+            "iso_week": 38,
+            "category": "delivery_delay",
+            "order_id": "O-000853"
+          },
+          {
+            "ticket_id": "T-000093",
+            "iso_week": 38,
+            "category": "product_question",
+            "order_id": null
+          },
+          {
+            "ticket_id": "T-000094",
+            "iso_week": 38,
+            "category": "delivery_delay",
+            "order_id": "O-000928"
+          },
+          {
+            "ticket_id": "T-000096",
+            "iso_week": 38,
+            "category": "where_is_my_order",
+            "order_id": "O-000759"
+          },
+          {
+            "ticket_id": "T-000100",
+            "iso_week": 39,
+            "category": "product_question",
+            "order_id": null
+          },
+          {
+            "ticket_id": "T-000102",
+            "iso_week": 39,
+            "category": "product_question",
+            "order_id": "O-001087"
+          },
+          {
+            "ticket_id": "T-000107",
+            "iso_week": 39,
+            "category": "product_question",
+            "order_id": null
+          },
+          {
+            "ticket_id": "T-000108",
+            "iso_week": 39,
+            "category": "delivery_delay",
+            "order_id": "O-001010"
+          },
+          {
+            "ticket_id": "T-000110",
+            "iso_week": 39,
+            "category": "payment_issue",
+            "order_id": null
+          },
+          {
+            "ticket_id": "T-000111",
+            "iso_week": 39,
+            "category": "payment_issue",
+            "order_id": "O-001051"
+          },
+          {
+            "ticket_id": "T-000112",
+            "iso_week": 39,
+            "category": "refund_request",
+            "order_id": null
+          },
+          {
+            "ticket_id": "T-000113",
+            "iso_week": 39,
+            "category": "where_is_my_order",
+            "order_id": "O-001127"
+          },
+          {
+            "ticket_id": "T-000114",
+            "iso_week": 39,
+            "category": "where_is_my_order",
+            "order_id": "O-001006"
+          },
+          {
+            "ticket_id": "T-000115",
+            "iso_week": 39,
+            "category": "where_is_my_order",
+            "order_id": "O-001054"
+          },
+          {
+            "ticket_id": "T-000118",
+            "iso_week": 39,
+            "category": "delivery_delay",
+            "order_id": "O-001239"
+          },
+          {
+            "ticket_id": "T-000119",
+            "iso_week": 39,
+            "category": "product_question",
+            "order_id": null
+          },
+          {
+            "ticket_id": "T-000120",
+            "iso_week": 39,
+            "category": "delivery_delay",
+            "order_id": "O-001239"
+          },
+          {
+            "ticket_id": "T-000125",
+            "iso_week": 40,
+            "category": "refund_request",
+            "order_id": null
+          },
+          {
+            "ticket_id": "T-000127",
+            "iso_week": 40,
+            "category": "where_is_my_order",
+            "order_id": "O-001359"
+          },
+          {
+            "ticket_id": "T-000128",
+            "iso_week": 40,
+            "category": "product_question",
+            "order_id": null
+          },
+          {
+            "ticket_id": "T-000131",
+            "iso_week": 40,
+            "category": "delivery_delay",
+            "order_id": "O-001397"
+          },
+          {
+            "ticket_id": "T-000133",
+            "iso_week": 40,
+            "category": "delivery_delay",
+            "order_id": "O-001445"
+          },
+          {
+            "ticket_id": "T-000135",
+            "iso_week": 40,
+            "category": "where_is_my_order",
+            "order_id": "O-001460"
+          },
+          {
+            "ticket_id": "T-000137",
+            "iso_week": 40,
+            "category": "where_is_my_order",
+            "order_id": "O-001259"
+          },
+          {
+            "ticket_id": "T-000140",
+            "iso_week": 40,
+            "category": "delivery_delay",
+            "order_id": "O-001481"
+          },
+          {
+            "ticket_id": "T-000141",
+            "iso_week": 40,
+            "category": "payment_issue",
+            "order_id": null
+          }
+        ],
+        "row_refs": [
+          "T-000151",
+          "T-000152",
+          "T-000153",
+          "T-000154",
+          "T-000156",
+          "T-000157",
+          "T-000159",
+          "T-000160",
+          "T-000161",
+          "T-000162",
+          "T-000163",
+          "T-000168",
+          "T-000169",
+          "T-000170",
+          "T-000171",
+          "T-000172",
+          "T-000173",
+          "T-000175",
+          "T-000176",
+          "T-000177"
+        ],
+        "row_ref_total": 50,
+        "retrieved_at": "2026-10-22T17:46:47Z"
+      }
+    ],
+    "recommendations": [
+      "Review the carrier SLA and reroute EU orders away from NordExpress until delivery times recover.",
+      "Proactively contact customers with delayed NordExpress orders to reduce cancellations."
+    ],
+    "memory": {
+      "recalled": [],
+      "stored": [
+        {
+          "memory_id": "m-82a878d4519b",
+          "entity": "metric:net_revenue",
+          "fact_key": "delta:net_revenue@2026-W41",
+          "fact": "EU net revenue was €6,990 in week 41, down 30.1% from €9,998 in week 40 and 31.4% below the four-week mean of €10,197.",
+          "evidence_refs": [
+            "E1@run:sample-01"
+          ],
+          "confidence": 0.95,
+          "source_run_id": "sample-01",
+          "created_at": "2026-10-22T17:46:47Z",
+          "last_confirmed_at": "2026-10-22T17:46:47Z",
+          "confirmations": 1,
+          "status": "confirmed",
+          "superseded_by": null,
+          "supersede_reason": null
+        },
+        {
+          "memory_id": "m-b41b5f41a1c7",
+          "entity": "region:EU",
+          "fact_key": "delta:net_revenue@2026-W41",
+          "fact": "EU net revenue was €6,990 in week 41, down 30.1% from €9,998 in week 40 and 31.4% below the four-week mean of €10,197.",
+          "evidence_refs": [
+            "E1@run:sample-01"
+          ],
+          "confidence": 0.95,
+          "source_run_id": "sample-01",
+          "created_at": "2026-10-22T17:46:47Z",
+          "last_confirmed_at": "2026-10-22T17:46:47Z",
+          "confirmations": 1,
+          "status": "confirmed",
+          "superseded_by": null,
+          "supersede_reason": null
+        },
+        {
+          "memory_id": "m-7ffd7862bb0a",
+          "entity": "week:2026-W41",
+          "fact_key": "delta:net_revenue@2026-W41",
+          "fact": "EU net revenue was €6,990 in week 41, down 30.1% from €9,998 in week 40 and 31.4% below the four-week mean of €10,197.",
+          "evidence_refs": [
+            "E1@run:sample-01"
+          ],
+          "confidence": 0.95,
+          "source_run_id": "sample-01",
+          "created_at": "2026-10-22T17:46:47Z",
+          "last_confirmed_at": "2026-10-22T17:46:47Z",
+          "confirmations": 1,
+          "status": "confirmed",
+          "superseded_by": null,
+          "supersede_reason": null
+        },
+        {
+          "memory_id": "m-0e33a28f5ee9",
+          "entity": "carrier:NordExpress",
+          "fact_key": "driver:carrier_delivery_delay@2026-W41",
+          "fact": "Cancelled orders with reason 'delivery_delay' on carrier NordExpress rose from €159 in week 40 to €3,347 in week 41, which explains 106.0% of the €3,007 drop in net revenue. NordExpress shipments were late (three or more days) in 91.7% of cases in week 41 versus 11.9% in the four prior weeks, and 37 of 42 affected orders had a late shipment. Support tickets rose to 52 in week 41 (four-week mean 14), and 50 of them (96.2%) are tied to NordExpress orders.",
+          "evidence_refs": [
+            "E4@run:sample-01",
+            "E1@run:sample-01",
+            "E5@run:sample-01",
+            "E6@run:sample-01",
+            "O-001502",
+            "O-001508",
+            "O-001521",
+            "O-001522",
+            "O-001533",
+            "S-001484",
+            "S-001486",
+            "S-001488",
+            "S-001489",
+            "S-001502",
+            "T-000151",
+            "T-000152",
+            "T-000153",
+            "T-000154",
+            "T-000156"
+          ],
+          "confidence": 1.0,
+          "source_run_id": "sample-01",
+          "created_at": "2026-10-22T17:46:47Z",
+          "last_confirmed_at": "2026-10-22T17:46:47Z",
+          "confirmations": 1,
+          "status": "confirmed",
+          "superseded_by": null,
+          "supersede_reason": null
+        },
+        {
+          "memory_id": "m-3d7c486d767a",
+          "entity": "region:EU",
+          "fact_key": "driver:carrier_delivery_delay@2026-W41",
+          "fact": "Cancelled orders with reason 'delivery_delay' on carrier NordExpress rose from €159 in week 40 to €3,347 in week 41, which explains 106.0% of the €3,007 drop in net revenue. NordExpress shipments were late (three or more days) in 91.7% of cases in week 41 versus 11.9% in the four prior weeks, and 37 of 42 affected orders had a late shipment. Support tickets rose to 52 in week 41 (four-week mean 14), and 50 of them (96.2%) are tied to NordExpress orders.",
+          "evidence_refs": [
+            "E4@run:sample-01",
+            "E1@run:sample-01",
+            "E5@run:sample-01",
+            "E6@run:sample-01",
+            "O-001502",
+            "O-001508",
+            "O-001521",
+            "O-001522",
+            "O-001533",
+            "S-001484",
+            "S-001486",
+            "S-001488",
+            "S-001489",
+            "S-001502",
+            "T-000151",
+            "T-000152",
+            "T-000153",
+            "T-000154",
+            "T-000156"
+          ],
+          "confidence": 1.0,
+          "source_run_id": "sample-01",
+          "created_at": "2026-10-22T17:46:47Z",
+          "last_confirmed_at": "2026-10-22T17:46:47Z",
+          "confirmations": 1,
+          "status": "confirmed",
+          "superseded_by": null,
+          "supersede_reason": null
+        },
+        {
+          "memory_id": "m-21e303c54a0f",
+          "entity": "week:2026-W41",
+          "fact_key": "driver:carrier_delivery_delay@2026-W41",
+          "fact": "Cancelled orders with reason 'delivery_delay' on carrier NordExpress rose from €159 in week 40 to €3,347 in week 41, which explains 106.0% of the €3,007 drop in net revenue. NordExpress shipments were late (three or more days) in 91.7% of cases in week 41 versus 11.9% in the four prior weeks, and 37 of 42 affected orders had a late shipment. Support tickets rose to 52 in week 41 (four-week mean 14), and 50 of them (96.2%) are tied to NordExpress orders.",
+          "evidence_refs": [
+            "E4@run:sample-01",
+            "E1@run:sample-01",
+            "E5@run:sample-01",
+            "E6@run:sample-01",
+            "O-001502",
+            "O-001508",
+            "O-001521",
+            "O-001522",
+            "O-001533",
+            "S-001484",
+            "S-001486",
+            "S-001488",
+            "S-001489",
+            "S-001502",
+            "T-000151",
+            "T-000152",
+            "T-000153",
+            "T-000154",
+            "T-000156"
+          ],
+          "confidence": 1.0,
+          "source_run_id": "sample-01",
+          "created_at": "2026-10-22T17:46:47Z",
+          "last_confirmed_at": "2026-10-22T17:46:47Z",
+          "confirmations": 1,
+          "status": "confirmed",
+          "superseded_by": null,
+          "supersede_reason": null
+        }
+      ]
+    },
+    "artifacts": [
+      {
+        "type": "trace",
+        "path": "logs/trace-sample-01.jsonl"
+      }
+    ]
+  },
+  "agents": [
+    {
+      "name": "Planner",
+      "role": "Parses the question, recalls memory, splits it into per-source sub-questions"
+    },
+    {
+      "name": "Investigator",
+      "role": "Queries orders/tickets/shipments, computes deltas, joins sources, proposes cited claims"
+    },
+    {
+      "name": "Critic",
+      "role": "Rejects any claim not backed by a re-verified cited aggregate or row; max 2 refinement loops"
+    },
+    {
+      "name": "Explainer",
+      "role": "Writes the final answer using only accepted claims, with citations"
+    }
+  ],
+  "mode": {
+    "sample_mode": true,
+    "source": "csv",
+    "provider": "sample",
+    "engine": "hmem-stub",
+    "model": "sample"
+  },
+  "degraded": false,
+  "warnings": [],
+  "trace_id": "trace-sample-01",
+  "log_file": "logs/trace-sample-01.jsonl",
+  "execution_time_seconds": 0.071,
+  "data_fingerprint": "sha256:410c53792e1883ef6685e3bc13a6384dcde712f43f8259ee37bd2bc3937ffd8f",
+  "generated_by": "run.py"
+}
