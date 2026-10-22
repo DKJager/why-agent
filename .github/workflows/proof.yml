@@ -1,0 +1,39 @@
+name: proof
+# Judges build from the Dockerfile. This job proves, on a clean GitHub runner from a fresh checkout:
+# the test suite passes, the Docker image builds, and the agent answers in SAMPLE_MODE (offline) via CLI and HTTP.
+on:
+  push:
+  workflow_dispatch:
+jobs:
+  proof:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    env:
+      SAMPLE_MODE: "true"
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Tests
+        run: |
+          pip install -r requirements.txt pytest
+          python -m pytest -q
+      - name: Docker build
+        run: docker build -t why-agent:ci .
+      - name: CLI run in the container, no network
+        run: docker run --rm --network none why-agent:ci python run.py "Why did EU revenue drop in week 41?" --run-id ci-cli | tee cli.txt
+      - name: HTTP run against the container
+        run: |
+          docker run -d --name wa -p 8000:8000 why-agent:ci
+          for i in $(seq 1 30); do curl -sf localhost:8000/healthz >/dev/null 2>&1 && break; sleep 1; done
+          curl -sS -m 120 -X POST localhost:8000/run -H 'Content-Type: application/json' \
+            -d '{"run_id":"ci-http","input":{"query":"Why did EU support tickets spike in week 41?"},"options":{"sample_mode":true}}' | tee http.json
+          python -c "import json;d=json.load(open('http.json'));assert d['status'] in ('success','partial'),d;print('HTTP status',d['status'])"
+          docker logs wa | tail -20
+      - uses: actions/upload-artifact@v4
+        with:
+          name: proof-output
+          path: |
+            cli.txt
+            http.json
