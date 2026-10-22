@@ -30,21 +30,21 @@
       "ruled_out": [],
       "prior_knowledge": [
         {
-          "memory_id": "m-21e303c54a0f",
+          "memory_id": "m-ddd801c3d35d",
           "entity": "week:2026-W41",
           "fact_key": "driver:carrier_delivery_delay@2026-W41",
-          "fact": "Cancelled orders with reason 'delivery_delay' on carrier NordExpress rose from €159 in week 40 to €3,347 in week 41, which explains 106.0% of the €3,007 drop in net revenue. NordExpress shipments were late (three or more days) in 91.7% of cases in week 41 versus 11.9% in the four prior weeks, and 37 of 42 affected orders had a late shipment. Support tickets rose to 52 in week 41 (four-week mean 14), and 50 of them (96.2%) are tied to NordExpress orders.",
+          "fact": "Cancelled orders with reason 'delivery_delay' on carrier NordExpress rose from €159 in week 40 to €3,347 in week 41, a change of €3,188, while total net revenue dropped by only €3,007. Other segments moved the other way by €181, so this driver accounts for more than the whole change and its explained share is capped at 100.0%. NordExpress shipments were late (three or more days) in 91.7% of cases in week 41 versus 11.9% in the four prior weeks, and 37 of 42 affected orders had a late shipment. Support tickets rose to 52 in week 41 (four-week mean 14), and 50 of them (96.2%) are tied to NordExpress orders.",
           "confidence": 1.0,
-          "last_confirmed_at": "2026-10-22T17:46:47Z",
+          "last_confirmed_at": "2026-10-22T18:05:16Z",
           "label": "prior knowledge (hypothesis, not evidence)"
         },
         {
-          "memory_id": "m-3d7c486d767a",
+          "memory_id": "m-3227119b3988",
           "entity": "region:EU",
           "fact_key": "driver:carrier_delivery_delay@2026-W41",
-          "fact": "Cancelled orders with reason 'delivery_delay' on carrier NordExpress rose from €159 in week 40 to €3,347 in week 41, which explains 106.0% of the €3,007 drop in net revenue. NordExpress shipments were late (three or more days) in 91.7% of cases in week 41 versus 11.9% in the four prior weeks, and 37 of 42 affected orders had a late shipment. Support tickets rose to 52 in week 41 (four-week mean 14), and 50 of them (96.2%) are tied to NordExpress orders.",
+          "fact": "Cancelled orders with reason 'delivery_delay' on carrier NordExpress rose from €159 in week 40 to €3,347 in week 41, a change of €3,188, while total net revenue dropped by only €3,007. Other segments moved the other way by €181, so this driver accounts for more than the whole change and its explained share is capped at 100.0%. NordExpress shipments were late (three or more days) in 91.7% of cases in week 41 versus 11.9% in the four prior weeks, and 37 of 42 affected orders had a late shipment. Support tickets rose to 52 in week 41 (four-week mean 14), and 50 of them (96.2%) are tied to NordExpress orders.",
           "confidence": 1.0,
-          "last_confirmed_at": "2026-10-22T17:46:47Z",
+          "last_confirmed_at": "2026-10-22T18:05:16Z",
           "label": "prior knowledge (hypothesis, not evidence)"
         },
         {
@@ -53,7 +53,7 @@
           "fact_key": "delta:net_revenue@2026-W41",
           "fact": "EU net revenue was €6,990 in week 41, down 30.1% from €9,998 in week 40 and 31.4% below the four-week mean of €10,197.",
           "confidence": 0.95,
-          "last_confirmed_at": "2026-10-22T17:46:47Z",
+          "last_confirmed_at": "2026-10-22T18:05:16Z",
           "label": "prior knowledge (hypothesis, not evidence)"
         },
         {
@@ -62,7 +62,7 @@
           "fact_key": "delta:net_revenue@2026-W41",
           "fact": "EU net revenue was €6,990 in week 41, down 30.1% from €9,998 in week 40 and 31.4% below the four-week mean of €10,197.",
           "confidence": 0.95,
-          "last_confirmed_at": "2026-10-22T17:46:47Z",
+          "last_confirmed_at": "2026-10-22T18:05:16Z",
           "label": "prior knowledge (hypothesis, not evidence)"
         }
       ],
@@ -283,7 +283,7 @@
         ],
         "row_refs": [],
         "row_ref_total": 0,
-        "retrieved_at": "2026-10-22T17:46:48Z"
+        "retrieved_at": "2026-10-22T18:05:16Z"
       },
       {
         "evidence_id": "E2",
@@ -455,7 +455,7 @@
         ],
         "row_refs": [],
         "row_ref_total": 0,
-        "retrieved_at": "2026-10-22T17:46:48Z"
+        "retrieved_at": "2026-10-22T18:05:16Z"
       },
       {
         "evidence_id": "E3",
@@ -825,7 +825,7 @@
           "T-000178"
         ],
         "row_ref_total": 47,
-        "retrieved_at": "2026-10-22T17:46:48Z"
+        "retrieved_at": "2026-10-22T18:05:16Z"
       },
       {
         "evidence_id": "E4",
@@ -1215,7 +1215,7 @@
           "O-001559"
         ],
         "row_ref_total": 41,
-        "retrieved_at": "2026-10-22T17:46:48Z"
+        "retrieved_at": "2026-10-22T18:05:16Z"
       },
       {
         "evidence_id": "E5",
@@ -1692,7 +1692,7 @@
           "S-001577"
         ],
         "row_ref_total": 66,
-        "retrieved_at": "2026-10-22T17:46:48Z"
+        "retrieved_at": "2026-10-22T18:05:16Z"
       }
     ],
     "recommendations": [
@@ -1702,10 +1702,10 @@
     "memory": {
       "recalled": [
         {
-          "memory_id": "m-21e303c54a0f",
+          "memory_id": "m-ddd801c3d35d",
           "entity": "week:2026-W41",
           "fact_key": "driver:carrier_delivery_delay@2026-W41",
-          "fact": "Cancelled orders with reason 'delivery_delay' on carrier NordExpress rose from €159 in week 40 to €3,347 in week 41, which explains 106.0% of the €3,007 drop in net revenue. NordExpress shipments were late (three or more days) in 91.7% of cases in week 41 versus 11.9% in the four prior weeks, and 37 of 42 affected orders had a late shipment. Support tickets rose to 52 in week 41 (four-week mean 14), and 50 of them (96.2%) are tied to NordExpress orders.",
+          "fact": "Cancelled orders with reason 'delivery_delay' on carrier NordExpress rose from €159 in week 40 to €3,347 in week 41, a change of €3,188, while total net revenue dropped by only €3,007. Other segments moved the other way by €181, so this driver accounts for more than the whole change and its explained share is capped at 100.0%. NordExpress shipments were late (three or more days) in 91.7% of cases in week 41 versus 11.9% in the four prior weeks, and 37 of 42 affected orders had a late shipment. Support tickets rose to 52 in week 41 (four-week mean 14), and 50 of them (96.2%) are tied to NordExpress orders.",
           "evidence_refs": [
             "E4@run:sample-01",
             "E1@run:sample-01",
@@ -1729,18 +1729,18 @@
           ],
           "confidence": 1.0,
           "source_run_id": "sample-01",
-          "created_at": "2026-10-22T17:46:47Z",
-          "last_confirmed_at": "2026-10-22T17:46:47Z",
+          "created_at": "2026-10-22T18:05:16Z",
+          "last_confirmed_at": "2026-10-22T18:05:16Z",
           "confirmations": 1,
           "status": "confirmed",
           "superseded_by": null,
           "supersede_reason": null
         },
         {
-          "memory_id": "m-3d7c486d767a",
+          "memory_id": "m-3227119b3988",
           "entity": "region:EU",
           "fact_key": "driver:carrier_delivery_delay@2026-W41",
-          "fact": "Cancelled orders with reason 'delivery_delay' on carrier NordExpress rose from €159 in week 40 to €3,347 in week 41, which explains 106.0% of the €3,007 drop in net revenue. NordExpress shipments were late (three or more days) in 91.7% of cases in week 41 versus 11.9% in the four prior weeks, and 37 of 42 affected orders had a late shipment. Support tickets rose to 52 in week 41 (four-week mean 14), and 50 of them (96.2%) are tied to NordExpress orders.",
+          "fact": "Cancelled orders with reason 'delivery_delay' on carrier NordExpress rose from €159 in week 40 to €3,347 in week 41, a change of €3,188, while total net revenue dropped by only €3,007. Other segments moved the other way by €181, so this driver accounts for more than the whole change and its explained share is capped at 100.0%. NordExpress shipments were late (three or more days) in 91.7% of cases in week 41 versus 11.9% in the four prior weeks, and 37 of 42 affected orders had a late shipment. Support tickets rose to 52 in week 41 (four-week mean 14), and 50 of them (96.2%) are tied to NordExpress orders.",
           "evidence_refs": [
             "E4@run:sample-01",
             "E1@run:sample-01",
@@ -1764,8 +1764,8 @@
           ],
           "confidence": 1.0,
           "source_run_id": "sample-01",
-          "created_at": "2026-10-22T17:46:47Z",
-          "last_confirmed_at": "2026-10-22T17:46:47Z",
+          "created_at": "2026-10-22T18:05:16Z",
+          "last_confirmed_at": "2026-10-22T18:05:16Z",
           "confirmations": 1,
           "status": "confirmed",
           "superseded_by": null,
@@ -1781,8 +1781,8 @@
           ],
           "confidence": 0.95,
           "source_run_id": "sample-01",
-          "created_at": "2026-10-22T17:46:47Z",
-          "last_confirmed_at": "2026-10-22T17:46:47Z",
+          "created_at": "2026-10-22T18:05:16Z",
+          "last_confirmed_at": "2026-10-22T18:05:16Z",
           "confirmations": 1,
           "status": "confirmed",
           "superseded_by": null,
@@ -1798,8 +1798,8 @@
           ],
           "confidence": 0.95,
           "source_run_id": "sample-01",
-          "created_at": "2026-10-22T17:46:47Z",
-          "last_confirmed_at": "2026-10-22T17:46:47Z",
+          "created_at": "2026-10-22T18:05:16Z",
+          "last_confirmed_at": "2026-10-22T18:05:16Z",
           "confirmations": 1,
           "status": "confirmed",
           "superseded_by": null,
@@ -1817,8 +1817,8 @@
           ],
           "confidence": 0.95,
           "source_run_id": "sample-02",
-          "created_at": "2026-10-22T17:46:48Z",
-          "last_confirmed_at": "2026-10-22T17:46:48Z",
+          "created_at": "2026-10-22T18:05:16Z",
+          "last_confirmed_at": "2026-10-22T18:05:16Z",
           "confirmations": 1,
           "status": "confirmed",
           "superseded_by": null,
@@ -1834,8 +1834,8 @@
           ],
           "confidence": 0.95,
           "source_run_id": "sample-02",
-          "created_at": "2026-10-22T17:46:48Z",
-          "last_confirmed_at": "2026-10-22T17:46:48Z",
+          "created_at": "2026-10-22T18:05:16Z",
+          "last_confirmed_at": "2026-10-22T18:05:16Z",
           "confirmations": 1,
           "status": "confirmed",
           "superseded_by": null,
@@ -1851,8 +1851,8 @@
           ],
           "confidence": 0.95,
           "source_run_id": "sample-02",
-          "created_at": "2026-10-22T17:46:48Z",
-          "last_confirmed_at": "2026-10-22T17:46:48Z",
+          "created_at": "2026-10-22T18:05:16Z",
+          "last_confirmed_at": "2026-10-22T18:05:16Z",
           "confirmations": 1,
           "status": "confirmed",
           "superseded_by": null,
@@ -1880,8 +1880,8 @@
           ],
           "confidence": 1.0,
           "source_run_id": "sample-02",
-          "created_at": "2026-10-22T17:46:48Z",
-          "last_confirmed_at": "2026-10-22T17:46:48Z",
+          "created_at": "2026-10-22T18:05:16Z",
+          "last_confirmed_at": "2026-10-22T18:05:16Z",
           "confirmations": 1,
           "status": "confirmed",
           "superseded_by": null,
@@ -1909,8 +1909,8 @@
           ],
           "confidence": 1.0,
           "source_run_id": "sample-02",
-          "created_at": "2026-10-22T17:46:48Z",
-          "last_confirmed_at": "2026-10-22T17:46:48Z",
+          "created_at": "2026-10-22T18:05:16Z",
+          "last_confirmed_at": "2026-10-22T18:05:16Z",
           "confirmations": 1,
           "status": "confirmed",
           "superseded_by": null,
@@ -1938,8 +1938,8 @@
           ],
           "confidence": 1.0,
           "source_run_id": "sample-02",
-          "created_at": "2026-10-22T17:46:48Z",
-          "last_confirmed_at": "2026-10-22T17:46:48Z",
+          "created_at": "2026-10-22T18:05:16Z",
+          "last_confirmed_at": "2026-10-22T18:05:16Z",
           "confirmations": 1,
           "status": "confirmed",
           "superseded_by": null,
@@ -1983,7 +1983,7 @@
   "warnings": [],
   "trace_id": "trace-sample-02",
   "log_file": "logs/trace-sample-02.jsonl",
-  "execution_time_seconds": 0.061,
+  "execution_time_seconds": 0.088,
   "data_fingerprint": "sha256:410c53792e1883ef6685e3bc13a6384dcde712f43f8259ee37bd2bc3937ffd8f",
   "generated_by": "run.py"
 }

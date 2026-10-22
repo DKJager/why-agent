@@ -125,6 +125,13 @@ def _subject(parsed: Any) -> str:
     return f"{_region_label(parsed)} {_metric_label(parsed)}"
 
 
+def _subject_lc(parsed: Any) -> str:
+    """Subject for mid-sentence use: lower-case the words, never the region code."""
+    if _get(parsed, "region", "ALL") == "ALL":
+        return f"overall {_metric_label(parsed)}"
+    return f"{_region_label(parsed)} {_metric_label(parsed)}"
+
+
 def _verb(parsed: Any) -> str:
     return {"drop": "dropped", "rise": "rose"}.get(_get(parsed, "direction"), "changed")
 
@@ -142,14 +149,14 @@ def plan(parsed: ParsedQuestion, recalled: Iterable[Any] = ()) -> Plan:
     """Build per-source sub-questions. Recalled memory mentioning a carrier
     promotes shipments to priority 1 and adds a ``memory`` sub-question."""
     recalled = list(recalled or ())
-    subject = _subject(parsed)
+    subject = _subject_lc(parsed)
     week_label = f"week {parsed.iso_week} of {parsed.iso_year}"
     region = _region_label(parsed)
     ticket_q = parsed.metric == "ticket_count"
 
     texts = {
         "orders": (
-            f"How did {subject.lower()} for {region} in {week_label} compare with the prior week "
+            f"How did {subject} for {region} in {week_label} compare with the prior week "
             f"and the four-week baseline, and which country, category, carrier and cancellation "
             f"reason explain the change?",
             "Quantify the change and decompose it into segments; separate demand from fulfilment.",
@@ -183,7 +190,7 @@ def plan(parsed: ParsedQuestion, recalled: Iterable[Any] = ()) -> Plan:
             purpose="Recalled memory is a hypothesis, never evidence.",
             priority=len(subs) + 1,
         ))
-    rationale = f"Investigate {subject.lower()} for {region} in {week_label} across orders, shipments and tickets."
+    rationale = f"Investigate {subject} for {region} in {week_label} across orders, shipments and tickets."
     if carrier_memory:
         rationale += " Recalled memory points at a carrier, so shipments are checked first."
     elif recalled:
@@ -224,15 +231,16 @@ def headline(payload: dict) -> str:
     s = _split(payload)
     parsed = s["parsed"]
     subject = _subject(parsed)
+    subject_lc = _subject_lc(parsed)
     wk = _get(parsed, "iso_week")
     if s["driver"]:
         return f"{subject} {_verb(parsed)} in week {wk}: {_strip_period(_get(s['driver'][0], 'text'))}"
     if s["observation"]:
-        return f"No significant change in {subject.lower()} in week {wk}; there is no cause to explain."
+        return f"No significant change in {subject_lc} in week {wk}; there is no cause to explain."
     if s["ruled_out"] or s["delta"]:
         return (f"{subject} {_verb(parsed)} in week {wk}, but no verified driver could be established "
                 f"from the available evidence.")
-    return f"No verified finding could be established for {subject.lower()} in week {wk}."
+    return f"No verified finding could be established for {subject_lc} in week {wk}."
 
 
 def narrate(payload: dict) -> str:

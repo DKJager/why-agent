@@ -28,6 +28,7 @@ _RE_WEEKS = re.compile(r"\b[Ww]eeks?\s*\d+(?:\s*[-\u2013]\s*\d+)?")
 _RE_WLABEL = re.compile(r"(?:\b\d{4}\s*-\s*)?\bW\d{1,2}\b")
 _RE_NUM = re.compile(r"\u20ac?(?:\d{1,3}(?:,\d{3})+|\d+)(?:\.\d+)?%?")
 _RE_YEAR = re.compile(r"^(?:19|20)\d{2}$")
+_RE_EXPL = re.compile(r"explain\w*[^%.\d]{0,30}?(\d[\d,]*(?:\.\d+)?)\s*%", re.I)
 
 
 def _close(a: float, b: float) -> bool:
@@ -44,6 +45,19 @@ def _numeric_tokens(text: str) -> list:
 
 def _markers(text: str) -> list:
     return [f"E{m}" for m in _RE_MARKER.findall(text or "")]
+
+
+def _share_over_100_in_text(text: str) -> list:
+    """Percentages above 100 stated next to the word 'explain...'."""
+    bad = []
+    for m in _RE_EXPL.finditer(text or ""):
+        try:
+            v = float(m.group(1).replace(",", ""))
+        except ValueError:
+            continue
+        if v > 100.0:
+            bad.append(f"{m.group(1)}%")
+    return bad
 
 
 def _forms(nr: Any) -> set:
@@ -130,6 +144,20 @@ class Critic:
 
             def add(code: str, detail: str, needs: Optional[str] = None) -> None:
                 rej.append(Rejection(c.claim_id, code, detail, needs))
+
+            # SHARE_OVER_100: an explained share must lie within 0..100%
+            sh = c.explained_share
+            if sh is not None and (float(sh) > 1.0 or float(sh) < 0.0):
+                add("SHARE_OVER_100",
+                    f"explained_share {float(sh):.2f} is outside 0..100%",
+                    "state the driver's change and the total change separately, "
+                    "cap the explained share at 100%")
+            over_txt = _share_over_100_in_text(c.text)
+            if over_txt:
+                add("SHARE_OVER_100",
+                    "text states an explained share above 100%: " + ", ".join(over_txt[:3]),
+                    "state the driver's change and the total change separately, "
+                    "cap the explained share at 100%")
 
             if c.kind == "memory":
                 rec = None
@@ -261,6 +289,11 @@ class Critic:
         if bad:
             out.append(Rejection("narrative", "UNGROUNDED_NUMBER",
                                  "number(s) not mapped to an accepted claim: " + ", ".join(bad[:5]),
+                                 None))
+        over = _share_over_100_in_text(text)
+        if over:
+            out.append(Rejection("narrative", "SHARE_OVER_100",
+                                 "narrative states an explained share above 100%: " + ", ".join(over[:3]),
                                  None))
         ctx.trace.emit(AGENT, "review_claims", "narrative",
                        "narrative verified" if not out else f"narrative rejected: {out[0].code}",

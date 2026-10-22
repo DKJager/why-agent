@@ -10,9 +10,9 @@
       "iso_week": 41,
       "direction": "drop"
     },
-    "summary": "No significant change in us net revenue in week 41; there is no cause to explain.",
+    "summary": "No significant change in US net revenue in week 41; there is no cause to explain.",
     "answer": {
-      "headline": "No significant change in us net revenue in week 41; there is no cause to explain.",
+      "headline": "No significant change in US net revenue in week 41; there is no cause to explain.",
       "drivers": [],
       "ruled_out": [
         {
@@ -30,7 +30,7 @@
           "fact_key": "driver:ticket_carrier@2026-W41",
           "fact": "The change is concentrated in the 'delivery_delay' and 'where_is_my_order' ticket categories: 39 tickets above the four-week mean, 100.0% of the total change. 41 of the 41 orders behind these tickets (100.0%) belong to carrier NordExpress, and 17 of those orders were cancelled. NordExpress shipments were late (three or more days) in 91.7% of cases in week 41 versus 11.9% in the four prior weeks.",
           "confidence": 1.0,
-          "last_confirmed_at": "2026-10-22T17:46:48Z",
+          "last_confirmed_at": "2026-10-22T18:05:16Z",
           "label": "prior knowledge (hypothesis, not evidence)"
         },
         {
@@ -39,16 +39,16 @@
           "fact_key": "delta:ticket_count@2026-W41",
           "fact": "EU support tickets were 52 in week 41, up 300.0% from 13 in week 40 and 285.2% above the four-week mean of 14.",
           "confidence": 0.95,
-          "last_confirmed_at": "2026-10-22T17:46:48Z",
+          "last_confirmed_at": "2026-10-22T18:05:16Z",
           "label": "prior knowledge (hypothesis, not evidence)"
         },
         {
-          "memory_id": "m-21e303c54a0f",
+          "memory_id": "m-ddd801c3d35d",
           "entity": "week:2026-W41",
           "fact_key": "driver:carrier_delivery_delay@2026-W41",
-          "fact": "Cancelled orders with reason 'delivery_delay' on carrier NordExpress rose from €159 in week 40 to €3,347 in week 41, which explains 106.0% of the €3,007 drop in net revenue. NordExpress shipments were late (three or more days) in 91.7% of cases in week 41 versus 11.9% in the four prior weeks, and 37 of 42 affected orders had a late shipment. Support tickets rose to 52 in week 41 (four-week mean 14), and 50 of them (96.2%) are tied to NordExpress orders.",
+          "fact": "Cancelled orders with reason 'delivery_delay' on carrier NordExpress rose from €159 in week 40 to €3,347 in week 41, a change of €3,188, while total net revenue dropped by only €3,007. Other segments moved the other way by €181, so this driver accounts for more than the whole change and its explained share is capped at 100.0%. NordExpress shipments were late (three or more days) in 91.7% of cases in week 41 versus 11.9% in the four prior weeks, and 37 of 42 affected orders had a late shipment. Support tickets rose to 52 in week 41 (four-week mean 14), and 50 of them (96.2%) are tied to NordExpress orders.",
           "confidence": 1.0,
-          "last_confirmed_at": "2026-10-22T17:46:47Z",
+          "last_confirmed_at": "2026-10-22T18:05:16Z",
           "label": "prior knowledge (hypothesis, not evidence)"
         },
         {
@@ -57,7 +57,7 @@
           "fact_key": "delta:net_revenue@2026-W41",
           "fact": "EU net revenue was €6,990 in week 41, down 30.1% from €9,998 in week 40 and 31.4% below the four-week mean of €10,197.",
           "confidence": 0.95,
-          "last_confirmed_at": "2026-10-22T17:46:47Z",
+          "last_confirmed_at": "2026-10-22T18:05:16Z",
           "label": "prior knowledge (hypothesis, not evidence)"
         },
         {
@@ -66,7 +66,7 @@
           "fact_key": "delta:net_revenue@2026-W41",
           "fact": "EU net revenue was €6,990 in week 41, down 30.1% from €9,998 in week 40 and 31.4% below the four-week mean of €10,197.",
           "confidence": 0.95,
-          "last_confirmed_at": "2026-10-22T17:46:47Z",
+          "last_confirmed_at": "2026-10-22T18:05:16Z",
           "label": "prior knowledge (hypothesis, not evidence)"
         }
       ],
@@ -76,7 +76,7 @@
         "Sample mode: all data is fictional synthetic data; no real company, customer or carrier is represented.",
         "Prior knowledge from H-MEM is a hypothesis, not evidence, and was not used to support any finding."
       ],
-      "text": "No significant change in us net revenue in week 41; there is no cause to explain.\n\nUS net revenue changed by only 2.1% versus the prior week and 2.2% versus the four-week mean, below the significance threshold, so there is no significant change to explain [E1].\n\nRuled out:\n- Demand is not the cause: gross order value before cancellations changed by only 1.9% versus the prior week and 0.8% versus the four-week mean [E1]."
+      "text": "No significant change in US net revenue in week 41; there is no cause to explain.\n\nUS net revenue changed by only 2.1% versus the prior week and 2.2% versus the four-week mean, below the significance threshold, so there is no significant change to explain [E1].\n\nRuled out:\n- Demand is not the cause: gross order value before cancellations changed by only 1.9% versus the prior week and 0.8% versus the four-week mean [E1]."
     },
     "findings": [
       {
@@ -289,7 +289,7 @@
         ],
         "row_refs": [],
         "row_ref_total": 0,
-        "retrieved_at": "2026-10-22T17:46:48Z"
+        "retrieved_at": "2026-10-22T18:05:16Z"
       }
     ],
     "recommendations": [],
@@ -317,8 +317,8 @@
           ],
           "confidence": 1.0,
           "source_run_id": "sample-02",
-          "created_at": "2026-10-22T17:46:48Z",
-          "last_confirmed_at": "2026-10-22T17:46:48Z",
+          "created_at": "2026-10-22T18:05:16Z",
+          "last_confirmed_at": "2026-10-22T18:05:16Z",
           "confirmations": 1,
           "status": "confirmed",
           "superseded_by": null,
@@ -334,18 +334,18 @@
           ],
           "confidence": 0.95,
           "source_run_id": "sample-02",
-          "created_at": "2026-10-22T17:46:48Z",
-          "last_confirmed_at": "2026-10-22T17:46:48Z",
+          "created_at": "2026-10-22T18:05:16Z",
+          "last_confirmed_at": "2026-10-22T18:05:16Z",
           "confirmations": 1,
           "status": "confirmed",
           "superseded_by": null,
           "supersede_reason": null
         },
         {
-          "memory_id": "m-21e303c54a0f",
+          "memory_id": "m-ddd801c3d35d",
           "entity": "week:2026-W41",
           "fact_key": "driver:carrier_delivery_delay@2026-W41",
-          "fact": "Cancelled orders with reason 'delivery_delay' on carrier NordExpress rose from €159 in week 40 to €3,347 in week 41, which explains 106.0% of the €3,007 drop in net revenue. NordExpress shipments were late (three or more days) in 91.7% of cases in week 41 versus 11.9% in the four prior weeks, and 37 of 42 affected orders had a late shipment. Support tickets rose to 52 in week 41 (four-week mean 14), and 50 of them (96.2%) are tied to NordExpress orders.",
+          "fact": "Cancelled orders with reason 'delivery_delay' on carrier NordExpress rose from €159 in week 40 to €3,347 in week 41, a change of €3,188, while total net revenue dropped by only €3,007. Other segments moved the other way by €181, so this driver accounts for more than the whole change and its explained share is capped at 100.0%. NordExpress shipments were late (three or more days) in 91.7% of cases in week 41 versus 11.9% in the four prior weeks, and 37 of 42 affected orders had a late shipment. Support tickets rose to 52 in week 41 (four-week mean 14), and 50 of them (96.2%) are tied to NordExpress orders.",
           "evidence_refs": [
             "E4@run:sample-01",
             "E1@run:sample-01",
@@ -369,8 +369,8 @@
           ],
           "confidence": 1.0,
           "source_run_id": "sample-01",
-          "created_at": "2026-10-22T17:46:47Z",
-          "last_confirmed_at": "2026-10-22T17:46:47Z",
+          "created_at": "2026-10-22T18:05:16Z",
+          "last_confirmed_at": "2026-10-22T18:05:16Z",
           "confirmations": 1,
           "status": "confirmed",
           "superseded_by": null,
@@ -386,8 +386,8 @@
           ],
           "confidence": 0.95,
           "source_run_id": "sample-01",
-          "created_at": "2026-10-22T17:46:47Z",
-          "last_confirmed_at": "2026-10-22T17:46:47Z",
+          "created_at": "2026-10-22T18:05:16Z",
+          "last_confirmed_at": "2026-10-22T18:05:16Z",
           "confirmations": 1,
           "status": "confirmed",
           "superseded_by": null,
@@ -403,8 +403,8 @@
           ],
           "confidence": 0.95,
           "source_run_id": "sample-01",
-          "created_at": "2026-10-22T17:46:47Z",
-          "last_confirmed_at": "2026-10-22T17:46:47Z",
+          "created_at": "2026-10-22T18:05:16Z",
+          "last_confirmed_at": "2026-10-22T18:05:16Z",
           "confirmations": 1,
           "status": "confirmed",
           "superseded_by": null,
@@ -449,7 +449,7 @@
   "warnings": [],
   "trace_id": "trace-sample-03",
   "log_file": "logs/trace-sample-03.jsonl",
-  "execution_time_seconds": 0.028,
+  "execution_time_seconds": 0.031,
   "data_fingerprint": "sha256:410c53792e1883ef6685e3bc13a6384dcde712f43f8259ee37bd2bc3937ffd8f",
   "generated_by": "run.py"
 }

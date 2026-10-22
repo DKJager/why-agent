@@ -33,7 +33,7 @@ def test_q1_planted_cause_found(sample_env):
 
     assert top["explained_share"] >= 0.6
     assert t["top_segment"][0] == "NordExpress"
-    assert abs(top["explained_share"] - t["top_share"]) <= 0.01
+    assert abs(top["explained_share"] - min(1.0, t["top_share"])) <= 0.01  # corrected 22 Oct per committee #1631: shares above 100% are capped and labelled
 
     wow = _find_wow(out)
     assert wow is not None, "no WoW number on the delta claim"

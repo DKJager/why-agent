@@ -16,6 +16,7 @@ ClaimKind = Literal["delta", "driver", "ruled_out", "observation", "memory"]
 RejectCode = Literal[
     "NO_CITATION", "UNKNOWN_EVIDENCE", "NUMBER_MISMATCH", "UNGROUNDED_NUMBER",
     "RECOMPUTE_FAILED", "ROWREF_MISSING", "DRIVER_SINGLE_SOURCE", "MEMORY_NOT_FOUND",
+    "SHARE_OVER_100",
 ]
 MemStatus = Literal["confirmed", "superseded"]
 

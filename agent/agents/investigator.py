@@ -31,7 +31,7 @@ LATE_DAYS = 3
 
 REBUILD_CODES = {
     "RECOMPUTE_FAILED", "NUMBER_MISMATCH", "UNGROUNDED_NUMBER",
-    "ROWREF_MISSING", "DRIVER_SINGLE_SOURCE",
+    "ROWREF_MISSING", "DRIVER_SINGLE_SOURCE", "SHARE_OVER_100",
 }
 
 
@@ -154,7 +154,7 @@ def _d_segment_delta(rows: list, p: dict) -> tuple:
     segs = sorted({s for (_, s) in net})
     total = _f(p.get("net_delta"))
     deltas = {s: net.get((w, s), 0.0) - net.get((w - 1, s), 0.0) for s in segs}
-    shares = {s: (max(0.0, deltas[s] / total) if total else 0.0) for s in segs}
+    shares = {s: (min(1.0, max(0.0, deltas[s] / total)) if total else 0.0) for s in segs}
     vals: dict = {}
     for s in segs:
         vals[f"net_abs_delta_{_san(s)}"] = _r(abs(deltas[s]))
@@ -180,7 +180,7 @@ def _d_cancel_segments(rows: list, p: dict) -> tuple:
         elif wk == w - 1:
             s["prev"] += _f(r.get("order_value_eur"))
     cancel_total_w = sum(s["w"] for s in seg.values())
-    best, best_share = None, -1.0
+    best, best_share = None, float("-inf")
     for key in sorted(seg, key=lambda k: (str(k[0]), str(k[1]))):
         s = seg[key]
         share = (-(s["w"] - s["prev"]) / total) if total else 0.0
@@ -188,20 +188,29 @@ def _d_cancel_segments(rows: list, p: dict) -> tuple:
             best, best_share = key, share
     vals = {"cancel_total_w_eur": _r(cancel_total_w), "cand_cancel_w_eur": 0.0,
             "cand_cancel_prev_eur": 0.0, "cand_incr_abs_eur": 0.0, "cand_orders_w": 0.0,
-            "cand_share_pct": 0.0}
-    info: dict = {"carrier": None, "reason": None, "share": 0.0, "incr": 0.0, "ids": []}
+            "cand_share_pct": 0.0, "cand_exceeds_total": 0.0, "cand_offset_abs_eur": 0.0}
+    info: dict = {"carrier": None, "reason": None, "share": 0.0, "incr": 0.0, "ids": [],
+                  "over": False, "raw_share": 0.0}
     if best is not None:
         s = seg[best]
-        share = max(0.0, best_share)
+        raw = best_share
+        over = raw > 1.0
+        # explained share is always capped to 0..100%; the raw ratio is never shown as a share
+        share = min(1.0, max(0.0, raw))
+        impact = -(s["w"] - s["prev"])  # effect of this segment on net revenue
+        offset = (abs(impact) - abs(total)) if over else 0.0
         ids = sorted(s["ids"])
         vals.update({
             "cand_cancel_w_eur": _r(s["w"]), "cand_cancel_prev_eur": _r(s["prev"]),
             "cand_incr_abs_eur": _r(abs(s["w"] - s["prev"])), "cand_orders_w": float(s["n"]),
             "cand_share_pct": _r(share * 100, 1),
+            "cand_exceeds_total": 1.0 if over else 0.0,
+            "cand_offset_abs_eur": _r(max(0.0, offset)),
         })
         info = {"carrier": best[0], "reason": best[1], "share": share,
                 "incr": s["w"] - s["prev"], "ids": ids,
-                "refs": ids[:20], "ref_total": len(ids)}
+                "refs": ids[:20], "ref_total": len(ids),
+                "over": over, "raw_share": raw}
     return vals, info
 
 
@@ -546,12 +555,25 @@ class _Run:
         # I8: driver claim
         up = i5["incr"] >= 0
         refs = []
-        t1 = (f"Cancelled orders with reason '{reason}' on carrier {cand} "
-              f"{'rose' if up else 'fell'} from {self.N(refs, e5, 'cand_cancel_prev_eur', 'eur0')} in week "
-              f"{w - 1} to {self.N(refs, e5, 'cand_cancel_w_eur', 'eur0')} in week {w}, which explains "
-              f"{self.N(refs, e5, 'cand_share_pct', 'pct1')} of the "
-              f"{self.N(refs, e1, 'net_change_abs_eur', 'eur0')} {'drop' if neg else 'rise'} in net "
-              f"revenue {self.mk(e5)}.")
+        if i5.get("over"):
+            # The driver moved more than the total: state both changes separately,
+            # say that other segments moved the other way, cap and label the share.
+            t1 = (f"Cancelled orders with reason '{reason}' on carrier {cand} "
+                  f"{'rose' if up else 'fell'} from {self.N(refs, e5, 'cand_cancel_prev_eur', 'eur0')} in "
+                  f"week {w - 1} to {self.N(refs, e5, 'cand_cancel_w_eur', 'eur0')} in week {w}, a change "
+                  f"of {self.N(refs, e5, 'cand_incr_abs_eur', 'eur0')} {self.mk(e5)}, while total net "
+                  f"revenue {'dropped' if neg else 'rose'} by only "
+                  f"{self.N(refs, e1, 'net_change_abs_eur', 'eur0')} {self.mk(e1)}. Other segments "
+                  f"moved the other way by {self.N(refs, e5, 'cand_offset_abs_eur', 'eur0')}, so this "
+                  f"driver accounts for more than the whole change and its explained share is capped "
+                  f"at {self.N(refs, e5, 'cand_share_pct', 'pct1')}.")
+        else:
+            t1 = (f"Cancelled orders with reason '{reason}' on carrier {cand} "
+                  f"{'rose' if up else 'fell'} from {self.N(refs, e5, 'cand_cancel_prev_eur', 'eur0')} in "
+                  f"week {w - 1} to {self.N(refs, e5, 'cand_cancel_w_eur', 'eur0')} in week {w}, which "
+                  f"explains {self.N(refs, e5, 'cand_share_pct', 'pct1')} of the "
+                  f"{self.N(refs, e1, 'net_change_abs_eur', 'eur0')} {'drop' if neg else 'rise'} in net "
+                  f"revenue {self.mk(e5)}.")
         t2 = (f"{cand} shipments were late (three or more days) in "
               f"{self.N(refs, e6, 'ship_late_share_w_pct', 'pct1')} of cases in week {w} versus "
               f"{self.N(refs, e6, 'ship_late_share_base_pct', 'pct1')} in the four prior weeks, and "
@@ -574,7 +596,7 @@ class _Run:
         self.add_claim("driver", " ".join(parts), refs,
                        entities=(f"carrier:{cand}",) + self.ents(),
                        fact_key=f"driver:carrier_{_san(reason)}@{_wl(y, w)}",
-                       explained_share=round(share, 4), confidence=conf)
+                       explained_share=round(min(1.0, max(0.0, share)), 4), confidence=conf)
         self._hypothesis_note(cand)
 
     # ---- ticket flow ---------------------------------------------------------------
@@ -676,7 +698,7 @@ class _Run:
         for r in refs:
             if r.evidence_id not in ids:
                 ids.append(r.evidence_id)
-        explained = i2["share"] * cshare
+        explained = min(1.0, max(0.0, i2["share"] * cshare))
         conf = _confidence(explained, self.n_sources(ids), self.retry == 0)
         self.add_claim("driver", " ".join((t1, t2, t3)), refs,
                        entities=(f"carrier:{top}",) + self.ents(),
