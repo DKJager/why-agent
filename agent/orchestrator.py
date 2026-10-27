@@ -20,7 +20,7 @@ from .agents.explainer import Explainer
 from .agents.investigator import Investigator
 from .agents.planner import Planner
 from .config import Config
-from .engine import HMemMeterless, HMemStub, build_engine
+from .engine import build_engine
 from .errors import (
     ConfigError,
     InternalError,
@@ -78,9 +78,7 @@ def _build_components(config: Config) -> dict:
     if config.sample_mode:
         source: Any = CsvSource(config.data_dir)
         provider: Any = SampleProvider()
-        if config.engine == "meterless":
-            HMemMeterless()  # raises NotConfigured
-        engine: Any = HMemStub(config.hmem_path) if config.engine == "stub" else build_engine(config)
+        engine: Any = build_engine(config)
         return {"source": source, "provider": provider, "engine": engine, "sample": True,
                 "config": config}
 
@@ -91,8 +89,6 @@ def _build_components(config: Config) -> dict:
         config.validate_live()
         source = ZetarisSource(config.zetaris_base_url, config.zetaris_api_key, config.zetaris_tables,
                                config.source_timeout_s, org_id=config.zetaris_org_id)
-        if config.engine == "meterless":
-            HMemMeterless()  # raises NotConfigured
         return {"source": source, "provider": SampleProvider(), "engine": build_engine(config),
                 "sample": False, "config": config}
     token = config.meterless_runtime_token
@@ -113,8 +109,6 @@ def _build_components(config: Config) -> dict:
                                  timeout_s=config.provider_timeout_s)
     source = ZetarisSource(config.zetaris_base_url, config.zetaris_api_key, config.zetaris_tables,
                            config.source_timeout_s, org_id=config.zetaris_org_id)
-    if config.engine == "meterless":
-        HMemMeterless()  # raises NotConfigured
     engine = build_engine(config)
     return {"source": source, "provider": provider, "engine": engine, "sample": False,
             "config": config}

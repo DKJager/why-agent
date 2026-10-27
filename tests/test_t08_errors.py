@@ -96,13 +96,12 @@ def test_rt_local_token_is_unauthorized_not_unavailable(sample_env, monkeypatch)
     _assert_terminal_error_trace(sample_env.logs, body)
 
 
-def test_engine_meterless_not_configured(sample_env, monkeypatch):
+def test_engine_meterless_runs(sample_env, monkeypatch):
+    # ENGINE=meterless is the real H-MEM engine now (agent.hmem), no longer a placeholder.
     monkeypatch.setenv("ENGINE", "meterless")
     status, body = handle_run(_payload(run_id="t08-engine"))
-    assert status == 503
-    _assert_shape(body)
-    assert body["error"]["type"] == "EngineNotConfigured"
-    _assert_terminal_error_trace(sample_env.logs, body)
+    assert status == 200, body
+    assert json.loads(sample_env.hmem.read_text(encoding="utf-8"))["engine"] == "hmem"
 
 
 def test_no_rows_is_no_data(sample_env):

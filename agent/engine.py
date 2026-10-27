@@ -2,7 +2,8 @@
 """H-MEM engine adapters (DESIGN section 8).
 
 * ``HMemStub``: fully functional offline JSON store.
-* ``HMemMeterless``: placeholder (assumption A2), raises ``NotConfigured``.
+* ``HMemMeterless``: the Meterless H-MEM engine (``agent.hmem``), conformance-tested
+  against the official H-MEM vectors.
 """
 
 from __future__ import annotations
@@ -189,41 +190,208 @@ class HMemStub:
         return {"engine": self.name, "state": "online", "path": self.path, "records": n}
 
 
-_NOT_WIRED = (
-    "Meterless H-MEM is not wired: set ENGINE=stub, or implement HMemMeterless against "
-    "engines/hmem once the engine repo is available"
-)
+def _iso(ms: int) -> str:
+    import time as _t
+    return _t.strftime("%Y-%m-%dT%H:%M:%SZ", _t.gmtime(ms / 1000.0))
+
+
+def _ms(iso: str) -> int:
+    import calendar as _c
+    import time as _t
+    try:
+        return int(_c.timegm(_t.strptime(iso, "%Y-%m-%dT%H:%M:%SZ")) * 1000)
+    except (TypeError, ValueError):
+        return int(_t.time() * 1000)
 
 
 class HMemMeterless:
-    """Placeholder (assumption A2). Every entry point raises ``NotConfigured``."""
+    """Why-Agent memory on the Meterless H-MEM engine (``agent.hmem``).
+
+    Confirmed findings become H-MEM records (type ``factual``, provenance origin
+    ``goal_run``, one entity per record, ``fact_key:`` tag). A changed finding is
+    written as a new record and the old one is marked ``supersededBy`` through the
+    engine, never deleted. Recall uses H-MEM's eight-signal hybrid ranking with the
+    question's entities; superseded records are counted and suppressed. Every
+    mutation is written to the H-MEM trust ledger. A store file written by
+    ``HMemStub`` is migrated on first open (provenance origin ``import``).
+    """
 
     name = "hmem-meterless"
+    NAMESPACE = "why-agent"
 
-    def __init__(self, *args: Any, **kwargs: Any) -> None:
-        raise NotConfigured(_NOT_WIRED)
+    def __init__(self, path: str, clock: Any = None) -> None:
+        from .hmem import HMEM, HMemError
 
+        self.path = str(path)
+        self._lock = threading.Lock()
+        self.last_trace: Optional[dict] = None
+        legacy = None
+        if os.path.exists(self.path):
+            try:
+                with open(self.path, "r", encoding="utf-8") as fh:
+                    obj = json.load(fh)
+            except (OSError, ValueError):
+                raise ConfigError("H-MEM store file is unreadable or corrupt",
+                                  details={"path": self.path}) from None
+            if isinstance(obj, dict) and obj.get("engine") != "hmem":
+                if not isinstance(obj.get("records"), list):
+                    raise ConfigError("H-MEM store file is unreadable or corrupt",
+                                      details={"path": self.path})
+                legacy = obj["records"]
+        try:
+            if legacy is None:
+                self.hmem = HMEM(clock=clock, actor="why-agent", path=self.path)
+            else:
+                self.hmem = HMEM(clock=clock, actor="why-agent", path=None)
+                self._migrate(legacy)
+                self.hmem.path = self.path
+                self.hmem._persist()
+        except (HMemError, KeyError, TypeError, ValueError):
+            raise ConfigError("H-MEM store file is unreadable or corrupt",
+                              details={"path": self.path}) from None
+
+    # ---- conversion ----------------------------------------------------------
+    def _migrate(self, rows: list) -> None:
+        recs = [MemoryRecord.from_dict(r) for r in rows]
+        for r in recs:
+            self._add(r.entity, r.fact_key, r.fact, r.evidence_refs, r.confidence, r.source_run_id,
+                      memory_id=r.memory_id, origin="import",
+                      label="migrated from the Why-Agent stub store",
+                      ext={"confirmations": r.confirmations, "createdAt": r.created_at,
+                           "lastConfirmedAt": r.last_confirmed_at})
+        for r in recs:
+            if r.status == "superseded" and r.superseded_by and self.hmem.store.get(r.superseded_by):
+                self.hmem.supersede(r.memory_id, r.superseded_by, r.supersede_reason or "migrated")
+                m = self.hmem.store.get(r.memory_id)
+                m.ext["supersedeReason"] = r.supersede_reason
+
+    def _add(self, entity: str, fact_key: str, fact: str, refs: list, confidence: float,
+             run_id: str, *, memory_id: Optional[str] = None, origin: str = "goal_run",
+             label: Optional[str] = None, ext: Optional[dict] = None):
+        existing = set(self.hmem.store.records) | set(self.hmem.store.archive)
+        mid = memory_id or _new_id(existing, entity, fact_key, fact, run_id)
+        now_iso = _iso(self.hmem.now())
+        block = {"confirmations": 1, "evidenceRefs": list(refs), "runId": run_id,
+                 "factKey": fact_key, "entity": entity, "createdAt": now_iso,
+                 "lastConfirmedAt": now_iso}
+        block.update(ext or {})
+        return self.hmem.add(
+            content=fact, source=f"why-agent:run:{run_id}", type="factual", layer="working",
+            confidence=confidence, tags=[f"fact_key:{fact_key}", f"entity:{entity}"],
+            namespace=self.NAMESPACE, entities=[entity], origin=origin,
+            label=label or f"confirmed by the Critic in run {run_id}",
+            refs={"goalRunId": run_id}, ext={"whyagent": block}, memory_id=mid)
+
+    @staticmethod
+    def _block(m) -> dict:
+        b = m.ext.get("whyagent")
+        if b is None:  # legacy migration stored the fields flat
+            b = m.ext.setdefault("whyagent", {})
+        for k in ("confirmations", "createdAt", "lastConfirmedAt", "supersedeReason"):
+            if k in m.ext:
+                b.setdefault(k, m.ext.pop(k))
+        return b
+
+    def _to_record(self, m) -> MemoryRecord:
+        b = self._block(m)
+        entity = b.get("entity") or (m.entities[0]["name"] if m.entities else "")
+        fact_key = b.get("factKey") or next(
+            (t.split(":", 1)[1] for t in m.tags if t.startswith("fact_key:")), "")
+        return MemoryRecord(
+            memory_id=m.id, entity=entity, fact_key=fact_key, fact=m.content,
+            evidence_refs=list(b.get("evidenceRefs", [])), confidence=round(m.confidence, 2),
+            source_run_id=b.get("runId") or m.source.rsplit(":", 1)[-1],
+            created_at=b.get("createdAt") or _iso(m.timestamp),
+            last_confirmed_at=b.get("lastConfirmedAt") or _iso(m.last_accessed),
+            confirmations=int(b.get("confirmations", 1)),
+            status="superseded" if m.superseded_by else "confirmed",
+            superseded_by=m.superseded_by, supersede_reason=b.get("supersedeReason"),
+        )
+
+    def _current(self, entity: str, fact_key: str):
+        tag = f"fact_key:{fact_key}"
+        for m in self.hmem.store.all():
+            if (not m.superseded_by and tag in m.tags
+                    and any(e["name"] == entity for e in m.entities)):
+                return m
+        return None
+
+    # ---- EngineAdapter API ---------------------------------------------------
     def store(self, entity: str, fact_key: str, fact: str, *, evidence_refs: list[str],
               confidence: float, run_id: str) -> MemoryRecord:
-        raise NotConfigured(_NOT_WIRED)
+        for label, v in (("entity", entity), ("fact_key", fact_key), ("fact", fact)):
+            if not isinstance(v, str) or not v.strip():
+                raise ValueError(f"{label} must be a non-empty string")
+        conf = round(max(0.0, min(1.0, float(confidence))), 2)
+        refs = [str(r) for r in (evidence_refs or [])]
+        with self._lock:
+            current = self._current(entity, fact_key)
+            if current is not None and current.content == fact.strip():
+                # Re-confirmation is positive feedback: +0.05 confidence, +1 access (ledgered).
+                self.hmem.feedback(current.id, "helpful")
+                b = self._block(current)
+                b["confirmations"] = int(b.get("confirmations", 1)) + 1
+                b["lastConfirmedAt"] = _iso(self.hmem.now())
+                for ref in refs:
+                    if ref not in b.setdefault("evidenceRefs", []):
+                        b["evidenceRefs"].append(ref)
+                if conf > current.confidence:
+                    self.hmem.update(current.id, reason=f"higher confidence in run {run_id}",
+                                     confidence=conf)
+                else:
+                    self.hmem._persist()
+                return self._to_record(current)
+            m = self._add(entity, fact_key, fact, refs, conf, run_id)
+            if current is not None:
+                self._block(current)["supersedeReason"] = f"newer confirmed finding in run {run_id}"
+                self.hmem.supersede(current.id, m.id, f"newer confirmed finding in run {run_id}")
+            return self._to_record(m)
 
     def recall(self, entities: Sequence[str] = (), query: Optional[str] = None,
                limit: int = 5) -> list[MemoryRecord]:
-        raise NotConfigured(_NOT_WIRED)
+        if limit <= 0:
+            return []
+        wanted = [e for e in (entities or ()) if isinstance(e, str) and e]
+        if not wanted and not (query and query.strip()):
+            return []
+        text = " ".join([query or ""] + wanted).strip()
+        with self._lock:
+            res = self.hmem.query(text, entities=wanted, threshold=0.0, top_n=10_000,
+                                  namespace=self.NAMESPACE, strategy="comprehensive")
+        self.last_trace = res["trace"]
+        out: list[MemoryRecord] = []
+        for hit in res["memories"]:
+            m, sig = hit["memory"], hit["signals"]
+            if m.superseded_by:
+                continue  # penalised and counted in trace.suppressedSuperseded
+            if sig["entity"] <= 0 and sig["keyword"] <= 0:
+                continue  # no grounding in the question: not a hypothesis worth raising
+            out.append(self._to_record(m))
+            if len(out) >= limit:
+                break
+        return out
 
     def get(self, memory_id: str) -> Optional[MemoryRecord]:
-        raise NotConfigured(_NOT_WIRED)
+        with self._lock:
+            m = self.hmem.store.get_any(memory_id)
+            return self._to_record(m) if m is not None else None
 
     def forget(self, memory_id: str) -> bool:
-        raise NotConfigured(_NOT_WIRED)
+        with self._lock:
+            return self.hmem.delete(memory_id, reason="forget requested")
 
     def health(self) -> dict:
-        raise NotConfigured(_NOT_WIRED)
+        from .hmem import RANKER_VERSION, WEIGHT_PROFILE
+        with self._lock:
+            return {"engine": self.name, "state": "online", "path": self.path,
+                    "records": len(self.hmem.store.records),
+                    "archived": len(self.hmem.store.archive),
+                    "ledger_entries": len(self.hmem.ledger.entries),
+                    "ranker": RANKER_VERSION, "weights": WEIGHT_PROFILE}
 
 
 def build_engine(config: Any) -> EngineAdapter:
     """Select the engine from a Config (``engine`` and ``hmem_path`` attributes)."""
-    if getattr(config, "sample_mode", False) or getattr(config, "engine", "stub") == "stub":
-        if getattr(config, "sample_mode", False) or config.engine == "stub":
-            return HMemStub(config.hmem_path)
-    return HMemMeterless()
+    if getattr(config, "engine", "stub") == "meterless":
+        return HMemMeterless(config.hmem_path)
+    return HMemStub(config.hmem_path)
