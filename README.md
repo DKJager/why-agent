@@ -113,7 +113,7 @@ Set `SAMPLE_MODE=false` and provide credentials. `.env.example` lists every vari
 | `MODEL_ID` | Routing id. Default `meterless/auto` |
 | `LIVE_PROVIDER` | `meterless` (default) or `sample`. With `sample`, live mode reads live Zetaris data but drafts wording with the deterministic local provider, so the data path can be verified without Meterless credentials. The result's `mode.provider` field says which provider ran. A `LIVE_PROVIDER=sample` run is **not** a live run of the whole agent: only the data comes from Zetaris |
 | `NVIDIA_API_KEY` | Read and masked by the config; no call in the current code uses it, because NVIDIA models are reached through the Meterless Runtime |
-| `ENGINE` | `stub` (default) or `meterless` (placeholder, see section 8) |
+| `ENGINE` | `stub` (default) or `meterless` (the H-MEM engine in `agent/hmem`, see section 8) |
 | `RUN_TIMEOUT_S`, `MAX_STEPS`, `MAX_MODEL_CALLS`, `MAX_REFINEMENTS` | Run bounds |
 | `PROVIDER_TIMEOUT_S` | Default 180, per the Meterless contract, capped by the remaining run budget |
 | `SOURCE_TIMEOUT_S` | Data source timeout |
@@ -161,10 +161,10 @@ question -> Planner -> Investigator -> Critic -> Explainer -> answer + trace
 
 ## 8. Sponsor technology
 
-Status lines reflect the state of the code on 22 Oct 2026 and must be updated after any live run [AUTHOR].
+Status lines reflect the state of the code and the live runs on 26 Oct 2026.
 
-- **Zetaris.** `ZetarisSource` posts to `{ZETARIS_REST_URL}/sql-editor/sqls/run` with a Bearer key and `X-Org-ID` and `X-Request-ID` headers. The body is `{queryId, sql, source:"SqlEditor", limit}`, and rows come back as lists of strings in SELECT order. Each query asks for at most 1000 rows unless it sets its own limit (the vendor client's default is 100); this is logged at the start of a live run, and a result that reaches the limit is flagged as truncated. The shape follows Zetaris's own Apache-2.0 runner (`zetaris/getting-started`, `scripts/zetaris_sql.py`) and is covered by fake-server contract tests. **Status: not yet run against a live Zetaris instance.** A managed AWS cluster is planned for Friday 23 Oct 2026.
-- **Meterless.** The Meterless Runtime is the OpenAI-compatible model provider (provider contract v4, `meterless-app`/`meterless-scope` headers, base-URL normalisation). **Status: not yet run live.** H-MEM persistent memory sits behind `EngineAdapter`. `HMemStub` works offline. `HMemMeterless` is a **placeholder**: selecting it (`ENGINE=meterless`) fails with `EngineNotConfigured` until the conformance-ported engine or credentials land. The stub is not claimed to pass the Meterless conformance suite.
+- **Zetaris.** `ZetarisSource` posts to `{ZETARIS_REST_URL}/sql-editor/sqls/run` with a Bearer key and `X-Org-ID` and `X-Request-ID` headers. The body is `{queryId, sql, source:"SqlEditor", limit}`, and rows come back as lists of strings in SELECT order. Each query asks for at most 1000 rows unless it sets its own limit (the vendor client's default is 100); this is logged at the start of a live run, and a result that reaches the limit is flagged as truncated. The shape follows Zetaris's own Apache-2.0 runner (`zetaris/getting-started`, `scripts/zetaris_sql.py`) and is covered by fake-server contract tests. **Status: run live on 26 Oct 2026** against a managed Zetaris AWS cluster (the three tables loaded as `whyagent.orders`, `whyagent.tickets`, `whyagent.shipments`). A live run of "Why did EU revenue drop in week 41?" finished with status success in about 41 seconds, and a row count read through the REST endpoint matched the source data (2002 orders). Live runs used `LIVE_PROVIDER=sample` (deterministic local wording), so the Meterless Runtime model route is still untested.
+- **Meterless H-MEM engine (implemented and conformance-tested).** `agent/hmem` is a Python implementation of the Meterless H-MEM spec (MIT): the portable memory record with mandatory source, the trust ledger (every create, feedback, update, supersede, archive and delete is logged with previous and new state), eight-signal hybrid retrieval multiplied by confidence, feedback deltas (+0.05 / -0.03 / -0.20), preview-first sleep with guardrails, approval-gated dreaming and the conflict gate. The official conformance vectors (v1) are vendored unchanged (`agent/hmem/conformance/vectors.json`, sha256 in `tests/test_t19_hmem_engine.py`) and the runner is ported check for check: `python -m agent.hmem.conformance.runner` reports 13/13. Mutation controls (an engine that accepts records without a source, wrong feedback arithmetic, no superseded penalty, dreaming that writes before approval) fail the same runner. `ENGINE=meterless` selects it; a Why-Agent finding is a record with provenance origin `goal_run`, a repeated finding is "helpful" feedback, a changed finding supersedes the old record, and recall uses the question's entities. A live run on Zetaris data stored 6 findings, and a second run in a new process recalled them. `ENGINE=stub` remains the default. Not yet claimed: the Meterless Runtime model provider (provider contract v4) has not been run live.
 - **NVIDIA via Nightshift.** In live mode Nemotron is the intended model, reached through Nightshift behind the Meterless Runtime, so no local GPU is needed. **Status: not yet run live.** [AUTHOR TO FILL: routing id used in the live run.]
 - **Cursor.** Announced by the organiser as optional. [AUTHOR TO FILL: whether and how Cursor was used.]
 
@@ -175,7 +175,7 @@ Status lines reflect the state of the code on 22 Oct 2026 and must be updated af
 | `requests` | Apache-2.0 | Runtime dependency (HTTP client) |
 | `pytest` | MIT | Test only |
 | Meterless Runtime / engine reference | Apache-2.0 | Referenced, not vendored [AUTHOR TO CONFIRM: remove if nothing is referenced] |
-| H-MEM documentation | MIT | Referenced, not vendored [AUTHOR TO CONFIRM: remove if not used] |
+| H-MEM spec and conformance vectors | MIT | Implemented in `agent/hmem`; `vectors.json` vendored unchanged |
 | Zetaris `getting-started` runner (`scripts/zetaris_sql.py`) | Apache-2.0 | Request shape followed, no code copied |
 | Northwind-Lite synthetic data (`data/`) | CC0 | Generated by `data/generate_sample_data.py` |
 
@@ -188,7 +188,7 @@ pip install pytest
 pytest -q
 ```
 
-- 142 tests pass.
+- 158 tests pass, including the 13 official H-MEM conformance checks and their mutation controls (`tests/test_t19_hmem_engine.py`).
 - CI (GitHub Actions, ubuntu-24.04, `.github/workflows/proof.yml`) runs on every push from a clean checkout. It runs pytest, a Docker build, the CLI in sample mode with `--network none`, and HTTP `POST /run` in sample mode.
 - Mutation controls show the tests detect broken safeguards:
   - A critic that accepts everything: 6 failures.
@@ -205,14 +205,14 @@ pytest -q
 
 - The data is synthetic only. No real company data has been tested.
 - The investigation logic covers two metrics (net revenue, ticket count) over three sources. Other questions return `QuestionNotSupported`.
-- The Zetaris integration has contract tests only and has not been run against a live instance.
+- The Zetaris integration was run live once on 26 Oct 2026 on synthetic data (see section 8); it has not been load tested.
 - The Meterless Runtime route and the Nemotron routing id have not been run live. The model's narrative quality in live mode is untested.
-- `HMemMeterless` is a placeholder. The stub memory is not conformance-tested.
+- The H-MEM engine is our own Python implementation of the spec, with a deterministic hashed embedder; absolute retrieval scores differ from other embedders (the conformance suite does not assert them). The default stub memory is not conformance-tested.
 - The repository is private and has no licence yet (see top of this file).
 - The Cursor and NVIDIA usage statements are open [AUTHOR TO FILL].
 
 ## 13. Remaining assumptions
 
-- **A1** Zetaris request and response shapes. Now matched to the vendor's own runner and covered by fake-server contract tests, but **not verified live**. The shapes are isolated in `ZetarisSource._build_request` and `_parse_response`.
-- **A2** How Python talks to the Meterless H-MEM engine. `HMemMeterless` is a placeholder until the conformance-ported engine or credentials are available.
+- **A1** Zetaris request and response shapes. Matched to the vendor's own runner, covered by fake-server contract tests and **verified live on 26 Oct 2026**. The shapes are isolated in `ZetarisSource._build_request` and `_parse_response`.
+- **A2** Resolved: the H-MEM engine is implemented in Python (`agent/hmem`) and passes the official conformance vectors.
 - **A3** Which Meterless routing id lands on Nemotron via Nightshift. Each response's `model` field is written to the trace.
